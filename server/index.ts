@@ -3,6 +3,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
+import modules from './modules';
+
 const app = express();
 const PORT = 5000;
 
@@ -28,6 +30,9 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+app.use('/ping', modules.ping);
+app.use('/auth', modules.auth);
+
 // catch all
 app.use('*', (req: express.Request, res: express.Response, next: express.NextFunction) => {
   next({
@@ -48,7 +53,7 @@ app.use((err: NextError, req: express.Request, res: express.Response, next: expr
   // err MUST be in format:
   // { code: status code, message: message to user, log: message to server operator }
   console.log(err.log);
-  return res.status(err.code).json({ message: err.message });
+  return res.status(err.code).json({ error: err.message });
 });
 
 // export to expedite testing implementation
