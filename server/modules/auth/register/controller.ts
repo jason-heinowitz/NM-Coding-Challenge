@@ -129,6 +129,7 @@ const controller: RegistrationController = {
         });
       }
 
+      // add username and hashed password to database
       const query = `INSERT INTO users (username, password) VALUES ('${username}','${hashedPassword}')`;
       db.query(query, (qErr) => {
         if (qErr) {
@@ -173,6 +174,7 @@ const controller: RegistrationController = {
   createSession(req: Request, res: Response, next: NextFunction): void {
     const { username } = res.locals;
 
+    // create jwt
     jwt.sign({ username }, process.env.JWT_SECRET, (err, signedJWT) => {
       if (err) {
         return next({
@@ -182,6 +184,7 @@ const controller: RegistrationController = {
         });
       }
 
+      // set jwt on next response
       res.cookie('token', signedJWT, {
         httpOnly: true,
       });

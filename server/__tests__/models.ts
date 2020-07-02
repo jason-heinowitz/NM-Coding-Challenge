@@ -8,3 +8,9 @@ export interface LoginUser {
   username?: string;
   password?: string;
 }
+
+export interface Email {
+  to?: string;
+  subject?: string;
+  body?: string;
+}
