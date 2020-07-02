@@ -1,6 +1,6 @@
 import supertest from 'supertest';
 import app from '../index';
-import { RegisterUser } from './models';
+import { RegisterUser, LoginUser } from './models';
 
 const request = supertest(app);
 
@@ -175,6 +175,113 @@ describe('authentication tests', () => {
         .expect('content-type', /json/)
         .expect((response) => {
           expect(response.body).toEqual({ message: 'Deleted user successfully.' });
+        })
+        .expect(200, done);
+    });
+  });
+
+  describe('/auth/login', () => {
+    it('returns 403 when username is not supplied', (done) => {
+      const user: LoginUser = {
+        password: 'pass',
+      };
+
+      request
+        .post('/auth/login')
+        .send(user)
+        .expect('content-type', /json/)
+        .expect((response) => {
+          expect(response.body).toEqual({ error: 'Username is required.' });
+        })
+        .expect(403, done);
+    });
+
+    it('returns 403 when username is empty', (done) => {
+      const user: LoginUser = {
+        username: '',
+        password: 'pass',
+      };
+
+      request
+        .post('/auth/login')
+        .send(user)
+        .expect('content-type', /json/)
+        .expect((response) => {
+          expect(response.body).toEqual({ error: 'Username cannot be empty.' });
+        })
+        .expect(403, done);
+    });
+
+    it('returns 403 when password is not supplied', (done) => {
+      const user: LoginUser = {
+        username: 'taken',
+      };
+
+      request
+        .post('/auth/login')
+        .send(user)
+        .expect('content-type', /json/)
+        .expect((response) => {
+          expect(response.body).toEqual({ error: 'Password is required.' });
+        })
+        .expect(403, done);
+    });
+
+    it('returns 403 when password is empty', (done) => {
+      const user: LoginUser = {
+        username: 'taken',
+        password: 'pass',
+      };
+
+      request
+        .post('/auth/login')
+        .send(user)
+        .expect('content-type', /json/)
+        .expect((response) => {
+          expect(response.body).toEqual({ error: 'Password cannot be empty.' });
+        })
+        .expect(403, done);
+    });
+
+    it('returns 403 when username and password are incorrect', (done) => {
+      const user: LoginUser = {
+        username: 'taken',
+        password: 'wrongPassword',
+      };
+
+      request
+        .post('/auth/login')
+        .send(user)
+        .expect('content-type', /json/)
+        .expect((response) => {
+          expect(response.body).toEqual({ error: 'Username and/or password incorrect.' });
+        })
+        .expect(403, done);
+    });
+
+    const persistantRequest = supertest.agent(app);
+    it('returns 200 when username and password are correct', (done) => {
+      const user: LoginUser = {
+        username: 'taken',
+        password: 'correctPassword123',
+      };
+
+      persistantRequest
+        .post('/auth/login')
+        .send(user)
+        .expect('content-type', /json/)
+        .expect((response) => {
+          expect(response.body).toEqual({ message: 'Successfully logged in.' });
+        })
+        .expect(200, done);
+    });
+
+    it('recieves cookies on successful login', (done) => {
+      persistantRequest
+        .get('/auth/validate')
+        .expect('content-type', /json/)
+        .expect((response) => {
+          expect(response.body).toEqual({ message: 'User validated.' });
         })
         .expect(200, done);
     });
