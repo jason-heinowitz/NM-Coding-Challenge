@@ -181,7 +181,9 @@ const controller: RegistrationController = {
         });
       }
 
-      res.cookie('token', signedJWT);
+      res.cookie('token', signedJWT, {
+        httpOnly: true,
+      });
 
       return next();
     });
