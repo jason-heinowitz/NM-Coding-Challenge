@@ -130,11 +130,11 @@ describe('authentication tests', () => {
       };
 
       request
-        .post('/api/register')
+        .post('/auth/register')
         .send(user)
         .expect('content-type', /json/)
         .expect((response) => {
-          expect(response.body).toEqual({ message: 'Registration successful' });
+          expect(response.body).toEqual({ message: 'Registration successful.' });
         })
         .expect(200, done);
     });
