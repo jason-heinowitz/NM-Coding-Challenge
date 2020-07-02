@@ -230,7 +230,7 @@ describe('authentication tests', () => {
     it('returns 403 when password is empty', (done) => {
       const user: LoginUser = {
         username: 'taken',
-        password: 'pass',
+        password: '',
       };
 
       request
