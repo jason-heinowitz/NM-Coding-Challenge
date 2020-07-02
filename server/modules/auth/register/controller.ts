@@ -1,13 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 import { db } from '../db';
+
+require('dotenv').config();
 
 interface RegistrationController {
   validateFields(req: Request, res: Response, next: NextFunction): void;
   doesUsernameExist(req: Request, res: Response, next: NextFunction): void;
   createUser(req: Request, res: Response, next: NextFunction): void;
   deleteUser(req: Request, res: Response, next: NextFunction): void;
+  createSession(req: Request, res: Response, next: NextFunction): void;
 }
 
 const controller: RegistrationController = {
@@ -160,6 +164,28 @@ const controller: RegistrationController = {
       // deleted test user from database successfully
       return next();
     });
+    // OUTSIDE QUERY
+  },
+  /**
+   * Automatically sign user in upon successful registration
+   */
+  createSession(req: Request, res: Response, next: NextFunction): void {
+    const { username } = res.locals;
+
+    jwt.sign({ username }, process.env.JWT_SECRET, (err, signedJWT) => {
+      if (err) {
+        return next({
+          log: 'Error while signing JWT after registration',
+          code: 500,
+          message: 'Could not create session at this time.',
+        });
+      }
+
+      res.cookie('token', signedJWT);
+
+      return next();
+    });
+    // OUTSIDE JWT SIGNATURE
   },
 };
 

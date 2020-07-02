@@ -139,6 +139,8 @@ describe('authentication tests', () => {
         .expect(409, done);
     });
 
+
+    const persistantRequest = supertest.agent(app);
     it('returns 200 when registration is successful', (done) => {
       const user: RegisterUser = {
         username: 'supertestUser',
@@ -146,12 +148,22 @@ describe('authentication tests', () => {
         confirmPassword: 'password123',
       };
 
-      request
+      persistantRequest
         .post('/auth/register')
         .send(user)
         .expect('content-type', /json/)
         .expect((response) => {
           expect(response.body).toEqual({ message: 'Registration successful.' });
+        })
+        .expect(200, done);
+    });
+
+    it('validates cookies after registration', (done) => {
+      persistantRequest
+        .get('/auth/validate')
+        .expect('content-type', /json/)
+        .expect((response) => {
+          expect(response.body).toEqual({ message: 'User validated.' });
         })
         .expect(200, done);
     });
