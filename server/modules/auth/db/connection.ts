@@ -2,8 +2,7 @@ import { Pool } from 'pg';
 
 require('dotenv').config();
 
-const pool = new Pool({
+// single pool for entire application
+export default new Pool({
   connectionString: process.env.USER_DATABASE,
 });
-
-export default pool;

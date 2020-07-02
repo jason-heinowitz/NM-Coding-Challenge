@@ -91,6 +91,7 @@ const controller: RegistrationController = {
     const query = `SELECT id FROM users WHERE username='${username}'`;
     db.query(query, (err, response) => {
       // if error while querying db, return something other than boolean
+      console.log(err);
       if (err) {
         return next({
           log: 'Error querying database for username during registration',
