@@ -3,6 +3,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
+import modules from './modules';
+
 const app = express();
 const PORT = 5000;
 
@@ -27,6 +29,8 @@ if (process.env.NODE_ENV === 'production') {
     console.log(`Listening on http://localhost:${PORT}`);
   });
 }
+
+app.use('/ping', modules.ping);
 
 // catch all
 app.use('*', (req: express.Request, res: express.Response, next: express.NextFunction) => {
