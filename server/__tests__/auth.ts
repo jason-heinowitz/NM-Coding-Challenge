@@ -155,5 +155,16 @@ describe('authentication tests', () => {
         })
         .expect(200, done);
     });
+
+    afterAll((done) => {
+      request
+        .delete('/auth/register/cleanup')
+        .send({ username: 'supertestUser' })
+        .expect('content-type', /json/)
+        .expect((response) => {
+          expect(response.body).toEqual({ message: 'Deleted user successfully.' });
+        })
+        .expect(200, done);
+    });
   });
 });
