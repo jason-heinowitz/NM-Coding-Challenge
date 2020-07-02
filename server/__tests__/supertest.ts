@@ -1,9 +1,9 @@
 import supertest from 'supertest';
 import app from '../index';
 
-describe('api is live', () => {
-  const request = supertest(app);
+const request = supertest(app);
 
+describe('api is live', () => {
   describe('/ping', () => {
     it('recieve code 200 on get request', (done) => {
       request
