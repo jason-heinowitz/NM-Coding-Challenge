@@ -122,6 +122,23 @@ describe('authentication tests', () => {
         .expect(400, done);
     });
 
+    it('returns 409 when password and confirmPassword do not match', (done) => {
+      const user: RegisterUser = {
+        username: 'test',
+        password: 'pass',
+        confirmPassword: 'notPass',
+      };
+
+      request
+        .post('/auth/register')
+        .send(user)
+        .expect('content-type', /json/)
+        .expect((response) => {
+          expect(response.body).toEqual({ error: 'Password and confirm password do not match.' });
+        })
+        .expect(409, done);
+    });
+
     it('returns 200 when registration is successful', (done) => {
       const user: RegisterUser = {
         username: 'supertestUser',
