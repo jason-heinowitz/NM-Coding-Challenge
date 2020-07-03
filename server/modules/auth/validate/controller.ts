@@ -13,17 +13,25 @@ const controller: ValidationController = {
    */
   validateUserSession(req: Request, res: Response, next: NextFunction): void {
     const { token } = req.cookies;
-    jwt.verify(token, process.env.JWT_SECRET, (err, { username }) => {
-      if (err || !username) {
-        return next({
-          log: 'User attempted to validate with invalid JWT',
-          code: 403,
-          message: 'Invalid user session.',
-        });
-      }
+    try {
+      jwt.verify(token, process.env.JWT_SECRET, (err, { username }) => {
+        if (err || !username) {
+          return next({
+            log: 'User attempted to validate with invalid JWT',
+            code: 403,
+            message: 'Invalid user session.',
+          });
+        }
 
-      return next();
-    });
+        return next();
+      });
+    } catch {
+      return next({
+        log: 'User attempted to validate without JWT',
+        code: 403,
+        message: 'Invalid user session.',
+      });
+    }
     // OUTSIDE JWT VERIFY
   },
 };

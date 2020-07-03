@@ -286,4 +286,16 @@ describe('authentication tests', () => {
         .expect(200, done);
     });
   });
+
+  describe('/auth/validate', () => {
+    it('returns 403 when not logged in', (done) => {
+      request
+        .get('/auth/validate')
+        .expect('content-type', /json/)
+        .expect((response) => {
+          expect(response.body).toEqual({ error: 'Invalid user session.' });
+        })
+        .expect(403, done);
+    });
+  });
 });

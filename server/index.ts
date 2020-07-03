@@ -32,6 +32,7 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use('/ping', modules.ping);
 app.use('/auth', modules.auth);
+app.use('/email', modules.email);
 
 // catch all
 app.use('*', (req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -49,12 +50,10 @@ interface NextError {
   message: string;
 }
 
-app.use((err: NextError, req: express.Request, res: express.Response, next: express.NextFunction) => {
+app.use((err: NextError, req: express.Request, res: express.Response, next: express.NextFunction) =>
   // err MUST be in format:
   // { code: status code, message: message to user, log: message to server operator }
-  console.log(err.log);
-  return res.status(err.code).json({ error: err.message });
-});
+  res.status(err.code).json({ error: err.message }));
 
 // export to expedite testing implementation
 module.exports = app;
