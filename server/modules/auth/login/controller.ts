@@ -106,10 +106,13 @@ const controller: LoginController = {
     });
     // OUTSIDE QUERY
   },
-  // username and password match, create user session
+  /**
+   * username and password match, create user session
+   */
   createSession(req: Request, res: Response, next: NextFunction): void {
     const { username } = req.body;
 
+    // create jwt
     jwt.sign({ username }, process.env.JWT_SECRET, (err, signedJWT) => {
       if (err) {
         return next({
@@ -119,6 +122,7 @@ const controller: LoginController = {
         });
       }
 
+      // set jwt on next response
       res.cookie('token', signedJWT, {
         httpOnly: true,
       });

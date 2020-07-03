@@ -286,4 +286,74 @@ describe('authentication tests', () => {
         .expect(200, done);
     });
   });
+
+  describe('/auth/validate', () => {
+    it('returns 403 when not logged in', (done) => {
+      request
+        .get('/auth/validate')
+        .expect('content-type', /json/)
+        .expect((response) => {
+          expect(response.body).toEqual({ error: 'Invalid user session.' });
+        })
+        .expect(403, done);
+    });
+
+    const persistantRequest = supertest.agent(app);
+    beforeAll((done) => {
+      const user: LoginUser = {
+        username: 'taken',
+        password: 'correctPassword123',
+      };
+
+      persistantRequest
+        .post('/auth/login')
+        .send(user)
+        .expect(200, done);
+    });
+
+    it('returns 200 when logged in', (done) => {
+      persistantRequest
+        .get('/auth/validate')
+        .expect('content-type', /json/)
+        .expect((response) => {
+          expect(response.body).toEqual({ message: 'User validated.' });
+        })
+        .expect(200, done);
+    });
+  });
+
+  describe('/auth/logout', () => {
+    const persistantRequest = supertest.agent(app);
+    beforeAll((done) => {
+      const user: LoginUser = {
+        username: 'taken',
+        password: 'correctPassword123',
+      };
+
+      persistantRequest
+        .post('/auth/login')
+        .send(user)
+        .expect(200, done);
+    });
+
+    it('returns 200 when successfully logging out', (done) => {
+      persistantRequest
+        .post('/auth/logout')
+        .expect('content-type', /json/)
+        .expect((response) => {
+          expect(response.body).toEqual({ message: 'Successfully logged out.' });
+        })
+        .expect(200, done);
+    });
+
+    it('returns 205 if attempting to logout when not logged in', (done) => {
+      persistantRequest
+        .post('/auth/logout')
+        .expect('content-type', /json/)
+        .expect((response) => {
+          expect(response.body).toEqual({ error: 'Cannot log out before logging in.' });
+        })
+        .expect(205, done);
+    });
+  });
 });

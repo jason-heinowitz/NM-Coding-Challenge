@@ -8,10 +8,14 @@ interface ValidationController {
 }
 
 const controller: ValidationController = {
+  /**
+   * Validate user's current JWT, returning error if invalid
+   */
   validateUserSession(req: Request, res: Response, next: NextFunction): void {
     const { token } = req.cookies;
-    jwt.verify(token, process.env.JWT_SECRET, (err, { username }) => {
-      if (err || !username) {
+
+    jwt.verify(token, process.env.JWT_SECRET, (err) => {
+      if (err) {
         return next({
           log: 'User attempted to validate with invalid JWT',
           code: 403,
