@@ -2,7 +2,7 @@ const schemas = {
   email: {
     from: { type: String, required: true },
     to: { type: [String], required: true },
-    ignore: { type: [String], required: false },
+    user: { type: String, required: true },
     subject: { type: String, required: false },
     body: { type: String, required: false },
   },

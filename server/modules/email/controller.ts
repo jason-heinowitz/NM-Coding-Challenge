@@ -15,7 +15,7 @@ interface EmailController {
 interface Email {
   from: string;
   to: string[];
-  ignore: string[];
+  user: string;
   subject?: string;
   body?: string;
 }
@@ -55,7 +55,7 @@ const controller: EmailController = {
     const { username } = res.locals;
 
     // get all emails where the recipient is the current user
-    db.emails.find({ to: `${username}@teamcatsnake.com` }, (err: Error, results: Email[]) => {
+    db.emails.find({ user: `${username}@teamcatsnake.com` }, (err: Error, results: Email[]) => {
       if (err) {
         return next({
           log: 'Error retrieving user\'s emails',
@@ -64,9 +64,8 @@ const controller: EmailController = {
         });
       }
 
+      res.locals.emails = results;
       // emails successfully found, continue
-      // only display emails that have not been deleted (ignored) by the user
-      res.locals.emails = results.filter((email) => email.ignore.indexOf(`${username}@teamcatsnake.com`) < 0);
       return next();
     });
   },
@@ -97,26 +96,31 @@ const controller: EmailController = {
       });
     }
 
-    const email = {
-      from: `${username}@teamcatsnake.com`,
-      to: recipients,
-      subject,
-      body,
-    };
+    // add one email to database for each recipient
+    const emails = [];
 
-    // add email to database
-    db.emails.create(email, (err) => {
-      if (err) {
-        return next({
-          log: 'Error when creating new email',
-          code: 500,
-          message: 'Could not send email at this time.',
-        });
-      }
+    // create an email for each recipient of the email to enable induvidual deletions of an email from user's inbox
+    recipients.forEach((recipient: string) => {
+      const email = {
+        from: `${username}@teamcatsnake.com`,
+        user: `${recipient}`,
+        to: recipients,
+        subject,
+        body,
+      };
 
-      return next();
+      // push each Promise create into an array
+      emails.push(db.emails.create(email));
     });
-    // OUTSIDE EMAIL CREATE
+
+    // wait until all db creates have completed before continuing
+    Promise.all(emails)
+      .then(() => next())
+      .catch(() => next({
+        log: 'Failed to save email to database',
+        code: 500,
+        message: 'Cannot send email at this time.',
+      }));
   },
   /**
    * Add user to list of users that have deleted (just ignored) an email so it does not change for other users in addition to keeping emails as permanant records
@@ -136,21 +140,19 @@ const controller: EmailController = {
       }
 
       // check if user actually received email they're attempting to update
-      if (foundEmail.from.indexOf(`${username}@teamcatsnake.com`) < 0) {
+      if (foundEmail.user !== `${username}@teamcatsnake.com`) {
         return next({
-          log: 'User attempted to "delete" email that they weren\'t a recipient of',
+          log: 'User attempted to delete email that they weren\'t a recipient of',
           code: 403,
           message: 'Cannot delete an email you have not recieved.',
         });
       }
 
-      foundEmail.ignore.push(`${username}@teamcatsnake.com`);
-
       // update email with new ignore list
-      db.emails.updateOne({ _id: id }, { ignore: foundEmail.ignore }, (updateErr) => {
-        if (updateErr) {
+      db.emails.deleteOne({ _id: id }, (deleteErr) => {
+        if (deleteErr) {
           return next({
-            log: 'Error saving email with appended ignore',
+            log: 'Error deleting email from database',
             code: 500,
             message: 'Cannot delete email at this time.',
           });
