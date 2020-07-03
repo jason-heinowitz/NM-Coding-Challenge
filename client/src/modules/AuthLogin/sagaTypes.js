@@ -1,0 +1,1 @@
+export const CHECK_COOKIES = 'CHECK_COOKIES';

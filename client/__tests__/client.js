@@ -12,7 +12,7 @@ enzyme.configure({ adapter: new Adapter() });
  * @param {string} searchTerm term to search for within a data-test attribute
  */
 function find(comp, searchTerm) {
-  return comp.find(`[data-test="${searchTerm}"`);
+  return comp.find(`[data-test="${searchTerm}"]`);
 }
 
 describe('home page', () => {
@@ -23,7 +23,7 @@ describe('home page', () => {
   });
 
   it('has a welcome message', () => {
-    const welcomeMessage = find('welcome-message');
+    const welcomeMessage = find(wrapper, 'welcome-message');
     expect(welcomeMessage.length).toBe(1);
     expect(welcomeMessage.text()).toBe('Welcome to Re(act)-Mail!');
   });
