@@ -1,14 +1,8 @@
 import React, { FC } from 'react';
-import Hello from './Hello';
 
-interface AppProps {
-  language: string;
-}
-
-const App: FC<AppProps> = ({ language }: AppProps) => (
+const App: FC<{}> = () => (
   <>
-    <h1>Welcome to Create {language} App!</h1>
-    <Hello />
+    <h1 data-test="welcome-message">Welcome to Create App!</h1>
   </>
 );
 

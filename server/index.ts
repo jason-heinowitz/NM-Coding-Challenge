@@ -12,18 +12,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// serve bundle.js in prod for every url
-if (process.env.NODE_ENV === 'production') {
-  // statically serve everything in the build folder on the route '/build'
-  app.use('/build', express.static(path.join(__dirname, '../build')));
-
-  // serve index.html on the route '/'
-  app.get('/*', (req: express.Request, res: express.Response) => {
-    res.sendFile(path.join(__dirname, '../build/index.html'));
-  });
-
-  app.listen(80); // listens on port 80 -> http://localhost/
-} else if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'test') {
   // do not listen if testing
   app.listen(PORT, () => {
     console.log(`Listening on http://localhost:${PORT}`);

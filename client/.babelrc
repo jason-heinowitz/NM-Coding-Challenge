@@ -3,6 +3,13 @@
     "targets": {
       "node": "current"
     }
-  }], "@babel/preset-typescript"],
-  "plugins": ["@babel/plugin-transform-runtime"]
+  }], "@babel/preset-react", "@babel/preset-typescript"],
+  "plugins": ["@babel/plugin-transform-runtime"],
+  "env": {
+    "production": {
+      "plugins": [
+        ["react-remove-properties", {"properties": ["data-test"]}]
+      ]
+    }
+  }
 }
