@@ -1,4 +1,6 @@
-import { takeLeading, put, call } from 'redux-saga/effects';
+import {
+  takeLeading, put, call, takeEvery,
+} from 'redux-saga/effects';
 
 import * as types from './sagaTypes';
 import * as actions from './actions';
@@ -27,12 +29,38 @@ function* fetchEmails() {
 }
 
 /**
+ * Attempts to delete an email from db against id passed by user
+ * @param {string} id mongo db id to delete
+ */
+function* deleteEmail({ id }) {
+  yield put(actions.deleteEmailStart());
+
+  const { status } = yield call(fetch, '/api/email', {
+    method: 'DELETE',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      id,
+    }),
+  });
+
+  if (status !== 200) yield put(actions.deleteEmailFail(id));
+  else (yield put(actions.deleteEmailPass(id)));
+}
+
+/**
  * Waits for request to fetch emails from db
  */
 function* watchFetchEmails() {
   yield takeLeading(types.FETCH_EMAILS, fetchEmails);
 }
 
+function* watchDeleteEmail() {
+  yield takeEvery(types.DELETE_EMAIL, deleteEmail);
+}
+
 export default {
   watchFetchEmails,
+  watchDeleteEmail,
 };

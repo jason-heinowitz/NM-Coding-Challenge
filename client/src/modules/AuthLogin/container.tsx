@@ -30,7 +30,6 @@ const container: FC<AuthLoginContainer> = (props) => {
 
   return (
     <div>
-      <p>my auth container</p>
       { props.isLoggedIn
         ? (
           <div>

@@ -13,21 +13,28 @@ const initialState: EmailOverviewReducer = {
 const reducer = (state = initialState, action: EmailAction): EmailOverviewReducer => {
   switch (action.type) {
     case (types.FETCH_EMAILS_START):
-      return ({
+      return {
         ...state,
         isFetchingEmails: true,
-      });
+      };
     case (types.FETCH_EMAILS_PASS):
-      return ({
+      return {
         emails: action.emails,
         favorites: action.favorites,
         isFetchingEmails: false,
-      });
+      };
     case (types.FETCH_EMAILS_FAIL):
-      return ({
+      return {
         ...state,
         isFetchingEmails: false,
-      });
+      };
+    // after successful deletion of an email from db, remove it from user's client
+    case (types.DELETE_EMAIL_PASS):
+      return {
+        ...state,
+        emails: state.emails.filter((e) => e._id !== action.id),
+        favorites: state.favorites.filter((e) => e._id !== action.id),
+      };
     default:
       return state;
   }

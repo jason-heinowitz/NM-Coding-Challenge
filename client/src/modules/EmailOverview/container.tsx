@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import * as actions from './sagaActions';
 import { EmailOverviewContainer, MapState, MapDispatch } from './interfaces';
+import { DisplayEmails } from './components';
 
 const mapStateToProps = (state: any): MapState => ({
   emails: state.emails.emails,
@@ -12,6 +13,7 @@ const mapStateToProps = (state: any): MapState => ({
 
 const mapDispatchToProps = (dispatch: any): MapDispatch => ({
   fetchEmails: () => dispatch(actions.fetchEmails()),
+  deleteEmail: (id: string) => dispatch(actions.deleteEmail(id)),
 });
 
 const container: FC<EmailOverviewContainer> = (props) => {
@@ -29,7 +31,7 @@ const container: FC<EmailOverviewContainer> = (props) => {
     <div>
       <h2>Inbox</h2>
 
-      {props.emails.length > 0 ? props.emails : <p>No emails yet :(</p>}
+      {props.emails.length > 0 ? <DisplayEmails emails={props.emails} deleteCallback={props.deleteEmail} /> : <p>No emails yet :(</p>}
     </div>
   );
 };

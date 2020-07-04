@@ -14,3 +14,18 @@ export const fetchEmailsPass = ({ emails, favorites }: EmailAction): EmailAction
 export const fetchEmailsFail = (): Action => ({
   type: types.FETCH_EMAILS_FAIL,
 });
+
+
+export const deleteEmailStart = (): Action => ({
+  type: types.DELETE_EMAIL_START,
+});
+
+export const deleteEmailPass = (id: string): EmailAction => ({
+  type: types.DELETE_EMAIL_PASS,
+  id,
+});
+
+export const deleteEmailFail = (id: string): EmailAction => ({
+  type: types.DELETE_EMAIL_FAIL,
+  id,
+});
