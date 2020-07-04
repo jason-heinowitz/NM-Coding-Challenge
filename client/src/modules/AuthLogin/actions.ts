@@ -1,6 +1,7 @@
 import * as types from './types';
 import { Action } from './interfaces';
 
+// check cookie actions
 export const checkCookiesStart = (): Action => ({
   type: types.CHECK_COOKIES_START,
 });

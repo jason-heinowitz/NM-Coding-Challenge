@@ -1,6 +1,15 @@
 import React, { FC, useState } from 'react';
+import { SendEmailObj } from '../interfaces';
 
-const NewEmail: FC<{}> = () => {
+interface PropTypes {
+  isSending: boolean;
+  send(email: SendEmailObj): any;
+}
+
+/**
+ * Form to compose and send a new email
+ */
+const NewEmail: FC<PropTypes> = ({ isSending, send }) => {
   const [to, setTo] = useState('');
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
@@ -22,7 +31,8 @@ const NewEmail: FC<{}> = () => {
         <textarea onChange={(e) => setBody(e.target.value)} />
       </label>
 
-      <button type="submit">Send</button>
+      <button type="submit" onClick={() => send({ to, subject, body })}>Send</button>
+      {isSending ? <span>Sending...</span> : ''}
     </div>
   );
 };

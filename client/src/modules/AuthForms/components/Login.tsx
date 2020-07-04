@@ -5,6 +5,10 @@ interface PropTypes {
   submit(userInfo: UserInfo): any;
 }
 
+/**
+ * Login form for unauthenticated user
+ * @param {PropTypes} props contains callback to submit login request
+ */
 const Login: FC<PropTypes> = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

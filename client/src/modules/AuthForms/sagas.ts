@@ -60,7 +60,7 @@ function* register({ username, password, confirmPassword }: UserInfo) {
 }
 
 /**
- * Wait for log in/ log out triggers in a cycle to declaratively prevent logout
+ * Wait for log in/ log out triggers in a cycle to declaratively prevent authentication cancel
  * triggers before logging in and vice-versa.
  */
 function* watchAuth() {
@@ -82,7 +82,7 @@ function* watchAuth() {
         break;
     }
 
-    // wait for log out trigger
+    // wait for cancel trigger
     const deAuthenticate = yield take([types.CANCEL_LOGIN]);
 
     switch (deAuthenticate.type) {

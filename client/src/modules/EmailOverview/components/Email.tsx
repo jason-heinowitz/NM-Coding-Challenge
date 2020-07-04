@@ -7,6 +7,9 @@ interface PropTypes {
   deleteThis(): any;
 }
 
+/**
+ * Displays an Email
+ */
 const email: FC<PropTypes> = ({ emailData, deleteThis }) => {
   const {
     from, to, subject, body,

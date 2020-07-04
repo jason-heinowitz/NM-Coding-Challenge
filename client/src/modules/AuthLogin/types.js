@@ -1,3 +1,4 @@
+// check cookies actions
 export const CHECK_COOKIES_START = 'CHECK_COOKIES_START';
 export const CHECK_COOKIES_PASS = 'CHECK_COOKIES_PASS';
 export const CHECK_COOKIES_FAIL = 'CHECK_COOKIES_FAIL';

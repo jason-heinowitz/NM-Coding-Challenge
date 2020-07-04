@@ -5,6 +5,10 @@ interface PropTypes {
   submit(userInfo: UserInfo): any;
 }
 
+/**
+ * Registration form for unauthenticated user
+ * @param {PropTypes} props contains callback to submit new user registration info
+ */
 const Register: FC<PropTypes> = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

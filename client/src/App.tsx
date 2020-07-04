@@ -7,6 +7,10 @@ import { Switch, Route, Link } from 'react-router-dom';
 import store, { history } from './store';
 import { AuthLoginContainer, AuthFormsContainer, EmailOverviewContainer } from './modules';
 
+/**
+ * Contains all components for the application
+ * Connects store and react router to application
+ */
 const App: FC<{}> = () => (
   <Provider store={store}>
     <ConnectedRouter history={history}>

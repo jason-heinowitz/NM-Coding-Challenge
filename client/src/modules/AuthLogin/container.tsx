@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
 
+import { useRouteMatch, Redirect } from 'react-router';
 import actions from './sagaActions';
 import { AuthLoginContainer, MapState, MapDispatch } from './interfaces';
 
@@ -18,6 +19,8 @@ const mapDispatchToProps = (dispatch: any): MapDispatch => ({
  * Takes two components, one to display when user is authenticated and one to display when user is not authenticated
  */
 const container: FC<AuthLoginContainer> = (props) => {
+  // if first render, send cookies to server to check if user is currently authenticated
+  // will only run on first render
   if (props.isLoggedIn === null) {
     props.checkCookies();
 
@@ -28,6 +31,9 @@ const container: FC<AuthLoginContainer> = (props) => {
     );
   }
 
+  // get current path
+  const { url } = useRouteMatch();
+
   return (
     <div>
       { props.isLoggedIn
@@ -37,7 +43,16 @@ const container: FC<AuthLoginContainer> = (props) => {
             <props.isAuthedComponent />
           </div>
         )
-        : <props.notAuthedComponent />}
+        : (
+          <> {/**
+                * Always edirect user to home url if they are not authenticated
+                * Form will show up no matter the url, but force user back to '/'
+                * for consistency
+                * */ }
+            {url !== '/' ? <Redirect to="/" />
+              : <props.notAuthedComponent />}
+          </>
+        )}
     </div>
   );
 };

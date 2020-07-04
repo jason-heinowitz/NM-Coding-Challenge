@@ -38,6 +38,7 @@ sagaMiddleware.run(AuthLoginSagas.watchLogout);
 sagaMiddleware.run(AuthFormsSagas.watchAuth);
 sagaMiddleware.run(EmailOverviewSagas.watchFetchEmails);
 sagaMiddleware.run(EmailOverviewSagas.watchDeleteEmail);
+sagaMiddleware.run(EmailOverviewSagas.watchSendEmail);
 
 // export for use in App.tsx
 export default store;

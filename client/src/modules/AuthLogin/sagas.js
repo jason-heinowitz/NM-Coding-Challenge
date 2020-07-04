@@ -16,6 +16,9 @@ function* checkCookies() {
   else yield put(actions.checkCookiesPass());
 }
 
+/**
+ * Request logout from api where token should be deleted upon successful logout
+ */
 function* logout() {
   yield put(actions.logoutStart());
 
@@ -43,6 +46,9 @@ function* watchCookies() {
   yield takeLeading(types.CHECK_COOKIES, checkCookies);
 }
 
+/**
+ * Watches for logout trigger
+ */
 function* watchLogout() {
   yield takeLeading(types.LOGOUT, logout);
 }

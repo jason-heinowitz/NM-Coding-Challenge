@@ -18,6 +18,7 @@ const mapDispatchToProps = (dispatch: any): MapDispatch => ({
 });
 
 const container: FC<AuthFormsContainer> = (props) => {
+  // give feedback to user than their form submission is being processed
   const currentAction = props.isLoggingIn
     ? 'Logging in...'
     : props.isRegistering
