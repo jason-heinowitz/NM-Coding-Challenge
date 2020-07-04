@@ -9,7 +9,7 @@ import { createBrowserHistory } from 'history';
 
 // import all reducers and sagas from modules
 import {
-  AuthLoginReducer, AuthLoginSagas, AuthFormsReducer, AuthFormsSagas, EmailOverviewReducer,
+  AuthLoginReducer, AuthLoginSagas, AuthFormsReducer, AuthFormsSagas, EmailOverviewReducer, EmailOverviewSagas,
 } from './modules';
 
 // initialize history api and export to enable interaction through redux actions
@@ -35,6 +35,7 @@ const store = process.env.NODE_ENV === 'development'
 // watch for saga actions
 sagaMiddleware.run(AuthLoginSagas.watchCookies);
 sagaMiddleware.run(AuthFormsSagas.watchAuth);
+sagaMiddleware.run(EmailOverviewSagas.watchFetchEmails);
 
 // export for use in App.tsx
 export default store;

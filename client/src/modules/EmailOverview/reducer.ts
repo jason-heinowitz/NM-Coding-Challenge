@@ -2,7 +2,7 @@ import * as types from './types';
 import { EmailAction, EmailOverviewReducer } from './interfaces';
 
 const initialState: EmailOverviewReducer = {
-  emails: [],
+  emails: null,
   favorites: [],
   isFetchingEmails: false,
 };

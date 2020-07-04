@@ -12,3 +12,17 @@ export interface EmailOverviewReducer {
   favorites: [];
   isFetchingEmails: boolean;
 }
+
+export interface MapState {
+  emails: [];
+  favorites: [];
+  isFetching: boolean;
+}
+
+export interface MapDispatch {
+  fetchEmails(): any;
+}
+
+export interface EmailOverviewContainer extends MapState, MapDispatch {
+
+}
