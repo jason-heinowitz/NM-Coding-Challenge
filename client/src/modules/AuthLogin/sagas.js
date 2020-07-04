@@ -10,9 +10,7 @@ function* checkCookies() {
   yield put(actions.checkCookiesStart());
   console.log('checking cookies...');
 
-  const { status } = yield call(fetch, '/auth/validate', {
-    method: 'POST',
-  });
+  const { status } = yield call(fetch, '/api/auth/validate');
 
   if (status !== 200) yield put(actions.checkCookiesFail());
   else yield put(actions.checkCookiesPass());

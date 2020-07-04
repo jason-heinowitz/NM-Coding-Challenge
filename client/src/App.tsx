@@ -1,8 +1,10 @@
 import React, { FC } from 'react';
 import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
 
-import store from './store';
-import { AuthLoginContainer } from './modules';
+import { Switch, Route } from 'react-router';
+import store, { history } from './store';
+import { AuthLoginContainer, AuthFormsContainer } from './modules';
 
 const t1: FC<{}> = () => (
   <div>
@@ -18,8 +20,18 @@ const t2: FC<{}> = () => (
 
 const App: FC<{}> = () => (
   <Provider store={store}>
-    <h1 data-test="welcome-message">Welcome to Re(act)-Mail!</h1>
-    <AuthLoginContainer notAuthedComponent={t1} isAuthedComponent={t2} />
+    <ConnectedRouter history={history}>
+      <h1 data-test="welcome-message">Welcome to Re(act)-Mail!</h1>
+
+      <Switch>
+        <Route path="/" exact>
+          <AuthLoginContainer notAuthedComponent={AuthFormsContainer} isAuthedComponent={t2} />
+        </Route>
+        <Route path="*">
+          <p>404 not found</p>
+        </Route>
+      </Switch>
+    </ConnectedRouter>
   </Provider>
 );
 

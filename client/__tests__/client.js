@@ -34,7 +34,7 @@ describe('home page', () => {
 
     it('has a register form', () => {
       expect(registerForm.length).toBe(1);
-      expect(registerFormChildren.length).toBe(7);
+      expect(registerFormChildren.length).toBe(4);
     });
 
     it('has a username field', () => {
@@ -64,7 +64,7 @@ describe('home page', () => {
 
     it('has a login form', () => {
       expect(loginForm.length).toBe(1);
-      expect(loginFormChildren.length).toBe(5);
+      expect(loginFormChildren.length).toBe(3);
     });
 
     it('has a username field', () => {

@@ -1,6 +1,10 @@
 import * as types from './sagaTypes';
 import { Action } from './interfaces';
 
-export const checkCookies = (): Action => ({
+const checkCookies = (): Action => ({
   type: types.CHECK_COOKIES,
 });
+
+export default {
+  checkCookies,
+};

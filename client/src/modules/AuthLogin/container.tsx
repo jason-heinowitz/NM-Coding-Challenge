@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import { connect } from 'react-redux';
 
-import * as actions from './sagaActions';
-import { AuthLoginContainer, MapState, DispatchState } from './interfaces';
+import actions from './sagaActions';
+import { AuthLoginContainer, MapState, MapDispatch } from './interfaces';
 
 const mapStateToProps = (state: any): MapState => ({
   isLoggedIn: state.auth.isLoggedIn,
 });
 
-const mapDispatchToProps = (dispatch: any): DispatchState => ({
+const mapDispatchToProps = (dispatch: any): MapDispatch => ({
   checkCookies: () => dispatch(actions.checkCookies()),
 });
 

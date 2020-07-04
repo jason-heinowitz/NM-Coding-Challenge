@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-export interface AuthLoginContainer extends MapState, DispatchState {
+export interface AuthLoginContainer extends MapState, MapDispatch {
   notAuthedComponent: FC;
   isAuthedComponent: FC;
 }
@@ -18,6 +18,6 @@ export interface MapState {
   isLoggedIn: boolean | null;
 }
 
-export interface DispatchState {
+export interface MapDispatch {
   checkCookies(): any;
 }
