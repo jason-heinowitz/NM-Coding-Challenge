@@ -9,10 +9,8 @@ const initialState: AuthLoginReducer = {
 
 /**
  * Highest-level reducer to check if user is currently logged in by sending a request to server and checking user's token
- * @param {AuthLoginReducer} state current state of reducer
- * @param {Action} action sets current state of checking cookie process
  */
-const authLoginReducer = (state = initialState, action: Action): AuthLoginReducer => {
+const reducer = (state = initialState, action: Action): AuthLoginReducer => {
   switch (action.type) {
     case (types.CHECK_COOKIES_START):
       return {
@@ -36,4 +34,4 @@ const authLoginReducer = (state = initialState, action: Action): AuthLoginReduce
   }
 };
 
-export default authLoginReducer;
+export default reducer;

@@ -9,7 +9,7 @@ const initialState: AuthFormsReducer = {
 /**
  * Handles login, registration, and logout functionality of the main email application
  */
-const authFormsReducer = (state = initialState, action: Action): AuthFormsReducer => {
+const reducer = (state = initialState, action: Action): AuthFormsReducer => {
   switch (action.type) {
     // log in handlers
     case (types.LOGIN_START):
@@ -49,4 +49,4 @@ const authFormsReducer = (state = initialState, action: Action): AuthFormsReduce
   }
 };
 
-export default authFormsReducer;
+export default reducer;

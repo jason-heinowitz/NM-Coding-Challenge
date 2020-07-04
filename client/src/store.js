@@ -9,7 +9,7 @@ import { createBrowserHistory } from 'history';
 
 // import all reducers and sagas from modules
 import {
-  AuthLoginReducer, AuthLoginSagas, AuthFormsReducer, AuthFormsSagas,
+  AuthLoginReducer, AuthLoginSagas, AuthFormsReducer, AuthFormsSagas, EmailOverviewReducer,
 } from './modules';
 
 // initialize history api and export to enable interaction through redux actions
@@ -20,6 +20,7 @@ const reducers = combineReducers({
   router: connectRouter(history),
   auth: AuthLoginReducer,
   authForms: AuthFormsReducer,
+  emails: EmailOverviewReducer,
 });
 
 // initialize redux-saga middleware handler
