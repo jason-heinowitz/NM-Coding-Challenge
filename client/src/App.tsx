@@ -4,7 +4,7 @@ import { ConnectedRouter } from 'connected-react-router';
 
 import { Switch, Route } from 'react-router';
 import store, { history } from './store';
-import { AuthLoginContainer, AuthFormsContainer } from './modules';
+import { AuthLoginContainer, AuthFormsContainer, EmailOverviewContainer } from './modules';
 
 const t1: FC<{}> = () => (
   <div>
@@ -25,7 +25,7 @@ const App: FC<{}> = () => (
 
       <Switch>
         <Route path="/" exact>
-          <AuthLoginContainer notAuthedComponent={AuthFormsContainer} isAuthedComponent={t2} />
+          <AuthLoginContainer notAuthedComponent={AuthFormsContainer} isAuthedComponent={EmailOverviewContainer} />
         </Route>
         <Route path="*">
           <p>404 not found</p>
