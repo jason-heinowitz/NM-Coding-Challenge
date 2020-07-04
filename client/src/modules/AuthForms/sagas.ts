@@ -48,6 +48,9 @@ function* register({ username, password, confirmPassword }: UserInfo) {
   yield put(actions.registerStart());
   const { status } = yield call(fetch, '/api/auth/register', {
     method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
     body: JSON.stringify({
       username,
       password,
@@ -55,8 +58,13 @@ function* register({ username, password, confirmPassword }: UserInfo) {
     }),
   });
 
-  if (status !== 200) yield put(actions.registerFail());
-  else yield put(actions.registerPass());
+  if (status !== 200) {
+    yield put(actions.registerFail());
+    yield put({ type: types.CANCEL_LOGIN });
+  } else {
+    yield put(actions.registerPass());
+    location.reload();
+  }
 }
 
 /**
