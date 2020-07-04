@@ -48,6 +48,9 @@ function* register({ username, password, confirmPassword }: UserInfo) {
   yield put(actions.registerStart());
   const { status } = yield call(fetch, '/api/auth/register', {
     method: 'POST',
+    header: {
+      'content-type': 'application/json',
+    },
     body: JSON.stringify({
       username,
       password,

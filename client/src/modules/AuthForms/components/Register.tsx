@@ -24,7 +24,7 @@ const Register: FC<PropTypes> = (props) => {
 
       <label htmlFor="confirm-password" data-test="confirm-password">
         Confirm Password
-        <input type="confirm-password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+        <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
       </label>
 
       <button type="submit" onClick={() => props.submit({ username, password, confirmPassword })} className="submit" data-test="register-submit">Sign Up</button>
