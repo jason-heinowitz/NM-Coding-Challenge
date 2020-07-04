@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "dev": "docker-compose up --build",
-    "test": "docker build ./server -f ./server/Dockerfile.test -t nm/server-test && docker run nm/server-test"
+    "test:api": "docker build ./server -f ./server/Dockerfile.test -t nm/server-test && docker run nm/server-test",
+    "test:client": "docker build ./client -f ./client/Dockerfile.test -t nm/client-test && docker run nm/client-test"
   },
   "keywords": [],
   "author": "Jason Heinowitz",
   "license": "ISC",
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
+    "@types/enzyme": "^3.10.5",
     "@types/express": "^4.17.6",
     "@types/jest": "^26.0.3",
     "@types/jsonwebtoken": "^8.5.0",
@@ -22,6 +24,8 @@
     "@types/react-dom": "^16.9.7",
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
+    "@types/redux": "^3.6.0",
+    "@types/redux-saga": "^0.10.5",
     "@typescript-eslint/eslint-plugin": "^2.27.0",
     "@typescript-eslint/parser": "^2.27.0",
     "babel-eslint": "^10.1.0",
@@ -31,7 +35,7 @@
     "eslint-plugin-json": "^2.1.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.19.0",
-    "eslint-plugin-react-hooks": "^3.0.0",
+    "eslint-plugin-react-hooks": "^2.5.0",
     "typescript": "^3.8.3"
   }
 }
