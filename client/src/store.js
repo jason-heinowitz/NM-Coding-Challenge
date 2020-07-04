@@ -34,6 +34,7 @@ const store = process.env.NODE_ENV === 'development'
 
 // watch for saga actions
 sagaMiddleware.run(AuthLoginSagas.watchCookies);
+sagaMiddleware.run(AuthLoginSagas.watchLogout);
 sagaMiddleware.run(AuthFormsSagas.watchAuth);
 sagaMiddleware.run(EmailOverviewSagas.watchFetchEmails);
 

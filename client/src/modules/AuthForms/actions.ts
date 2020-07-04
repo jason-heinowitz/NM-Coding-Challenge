@@ -26,16 +26,3 @@ export const registerPass = (): Action => ({
 export const registerFail = (): Action => ({
   type: types.REGISTER_FAIL,
 });
-
-// logout actions
-export const logoutStart = (): Action => ({
-  type: types.LOGOUT_START,
-});
-
-export const logoutPass = (): Action => ({
-  type: types.LOGOUT_PASS,
-});
-
-export const logoutFail = (): Action => ({
-  type: types.REGISTER_FAIL,
-});

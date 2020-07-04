@@ -7,8 +7,3 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const REGISTER_START = 'REGISTER_START';
 export const REGISTER_PASS = 'REGISTER_PASS';
 export const REGISTER_FAIL = 'REGISTER_FAIL';
-
-// logout actions
-export const LOGOUT_START = 'LOGOUT_START';
-export const LOGOUT_PASS = 'LOGOUT_PASS';
-export const LOGOUT_FAIL = 'LOGOUT_FAIL';

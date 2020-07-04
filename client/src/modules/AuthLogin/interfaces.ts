@@ -6,8 +6,9 @@ export interface AuthLoginContainer extends MapState, MapDispatch {
 }
 
 export interface AuthLoginReducer {
-  isLoggedIn: boolean | null;
+  isLoggedIn: boolean;
   isLoggingIn: boolean;
+  isLoggingOut: boolean;
 }
 
 export interface Action {
@@ -20,4 +21,5 @@ export interface MapState {
 
 export interface MapDispatch {
   checkCookies(): any;
+  logout(): any;
 }

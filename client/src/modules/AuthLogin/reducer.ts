@@ -5,6 +5,7 @@ import { AuthLoginReducer, Action } from './interfaces';
 const initialState: AuthLoginReducer = {
   isLoggedIn: null,
   isLoggingIn: false,
+  isLoggingOut: false,
 };
 
 /**
@@ -28,6 +29,21 @@ const reducer = (state = initialState, action: Action): AuthLoginReducer => {
         ...state,
         isLoggedIn: false,
         isLoggingIn: false,
+      };
+    case (types.LOGOUT_START):
+      return {
+        ...state,
+        isLoggingOut: true,
+      };
+    case (types.LOGOUT_PASS):
+      return {
+        ...state,
+        isLoggingOut: false,
+      };
+    case (types.LOGOUT_FAIL):
+      return {
+        ...state,
+        isLoggingOut: false,
       };
     default:
       return state;

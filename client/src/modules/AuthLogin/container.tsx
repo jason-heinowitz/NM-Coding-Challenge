@@ -10,6 +10,7 @@ const mapStateToProps = (state: any): MapState => ({
 
 const mapDispatchToProps = (dispatch: any): MapDispatch => ({
   checkCookies: () => dispatch(actions.checkCookies()),
+  logout: () => dispatch(actions.logout()),
 });
 
 
@@ -31,7 +32,12 @@ const container: FC<AuthLoginContainer> = (props) => {
     <div>
       <p>my auth container</p>
       { props.isLoggedIn
-        ? <props.isAuthedComponent />
+        ? (
+          <div>
+            <button type="submit" onClick={props.logout}>Logout</button>
+            <props.isAuthedComponent />
+          </div>
+        )
         : <props.notAuthedComponent />}
     </div>
   );

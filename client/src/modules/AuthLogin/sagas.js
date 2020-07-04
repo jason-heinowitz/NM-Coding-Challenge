@@ -16,6 +16,23 @@ function* checkCookies() {
   else yield put(actions.checkCookiesPass());
 }
 
+function* logout() {
+  yield put(actions.logoutStart());
+
+  // get status from logout
+  const { status } = yield call(fetch, '/api/auth/logout', {
+    method: 'POST',
+  });
+
+  // if logout failed, don't do anything
+  if (status !== 200) yield put(actions.logoutFail());
+  else {
+    // if logout successful, refresh page
+    yield put(actions.logoutPass());
+    location.reload();
+  }
+}
+
 /**
  * Watches for request to start checking cookies
  */
@@ -26,6 +43,11 @@ function* watchCookies() {
   yield takeLeading(types.CHECK_COOKIES, checkCookies);
 }
 
+function* watchLogout() {
+  yield takeLeading(types.LOGOUT, logout);
+}
+
 export default {
   watchCookies,
+  watchLogout,
 };

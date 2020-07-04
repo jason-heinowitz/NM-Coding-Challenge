@@ -7,6 +7,9 @@ const initialState: EmailOverviewReducer = {
   isFetchingEmails: false,
 };
 
+/**
+ * Handles all fetched emails after a user logs in
+ */
 const reducer = (state = initialState, action: EmailAction): EmailOverviewReducer => {
   switch (action.type) {
     case (types.FETCH_EMAILS_START):

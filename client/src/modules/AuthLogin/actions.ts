@@ -12,3 +12,17 @@ export const checkCookiesPass = (): Action => ({
 export const checkCookiesFail = (): Action => ({
   type: types.CHECK_COOKIES_FAIL,
 });
+
+
+// logout actions
+export const logoutStart = (): Action => ({
+  type: types.LOGOUT_START,
+});
+
+export const logoutPass = (): Action => ({
+  type: types.LOGOUT_PASS,
+});
+
+export const logoutFail = (): Action => ({
+  type: types.LOGOUT_FAIL,
+});

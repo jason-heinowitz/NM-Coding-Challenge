@@ -1,7 +1,6 @@
 import {
   put, call, take, fork, cancel, cancelled,
 } from 'redux-saga/effects';
-import { push } from 'connected-react-router';
 
 import * as types from './sagaTypes';
 import * as actions from './actions';
@@ -61,19 +60,6 @@ function* register({ username, password, confirmPassword }: UserInfo) {
 }
 
 /**
- * Fetch logout route to attempt to de-authenticate current user
- */
-function* logout() {
-  yield put(actions.logoutStart());
-  const { status } = yield call(fetch, '/api/auth/logout', {
-    method: 'POST',
-  });
-
-  if (status !== 200) yield put(actions.logoutFail());
-  else yield put(actions.logoutPass());
-}
-
-/**
  * Wait for log in/ log out triggers in a cycle to declaratively prevent logout
  * triggers before logging in and vice-versa.
  */
@@ -97,12 +83,9 @@ function* watchAuth() {
     }
 
     // wait for log out trigger
-    const deAuthenticate = yield take([types.LOGOUT, types.CANCEL_LOGIN]);
+    const deAuthenticate = yield take([types.CANCEL_LOGIN]);
 
     switch (deAuthenticate.type) {
-      case (types.LOGOUT):
-        yield logout();
-        break;
       case (types.CANCEL_LOGIN):
         yield cancel(action);
         break;
