@@ -39,7 +39,7 @@ const Login: FC<PropTypes> = ({ submit, status }) => {
       <input type="password" name="login-password" id="login-password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
       <button disabled={isLoggingIn || isRegistering} type="submit" onClick={(): void => validateInput()} className="submit" data-test="login-submit">{isLoggingIn ? 'Logging in...' : 'Log In'}</button>
-      {loginFailed ? <p>{loginFailed}</p> : ''}
+      {loginFailed ? <p className="auth-fail-message">{loginFailed}</p> : ''}
     </div>
   );
 };

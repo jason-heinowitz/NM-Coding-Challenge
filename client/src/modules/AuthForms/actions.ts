@@ -24,6 +24,7 @@ export const registerPass = (): Action => ({
   type: types.REGISTER_PASS,
 });
 
-export const registerFail = (): Action => ({
+export const registerFail = (errorMessage: string): Action => ({
   type: types.REGISTER_FAIL,
+  errorMessage,
 });

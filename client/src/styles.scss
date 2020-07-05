@@ -59,6 +59,13 @@ $xlarge-break: 1201px;
         @media screen and (min-width: 0) {
           padding: 0.5rem 0;
           transition: ease-in 0.1s background-color;
+          margin-bottom: 0.4rem;
+        }
+      }
+
+      .auth-fail-message {
+        @media screen and (min-width: 0) {
+          text-align: center;
         }
       }
     }

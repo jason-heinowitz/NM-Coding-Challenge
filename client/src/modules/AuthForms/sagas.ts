@@ -11,36 +11,32 @@ import { UserInfo } from './interfaces';
  * @param {UserInfo} userInfo information to login as an existing user
  */
 function* login({ username, password }: UserInfo) {
-  try {
-    yield put(actions.loginStart());
-    const loginStream = yield call(fetch, '/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    });
+  yield put(actions.loginStart());
+  const loginStream = yield call(fetch, '/api/auth/login', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      username,
+      password,
+    }),
+  });
 
-    // if login is not good, cancel login saga
-    if (loginStream.status !== 200) {
-      const { error } = yield call([loginStream, 'json']);
+  // if login is not good, cancel login saga
+  if (loginStream.status !== 200) {
+    const { error } = yield call([loginStream, 'json']);
 
-      // if log in fails, pass error message to front end
-      yield put(actions.loginFail(error));
-      yield put({ type: types.CANCEL_LOGIN });
-    } else {
-      yield put(actions.loginPass());
+    // if log in fails, pass error message to front end
+    yield put(actions.loginFail(error));
+    yield put({ type: types.CANCEL_LOGIN });
+  } else {
+    yield put(actions.loginPass());
 
-      // on successful log in, refresh page to update isLoggedIn state in auth
-      // if connected react router was used, AuthLogin container would not update since isLoggedIn
-      // is an independant piece of state
-      location.reload();
-    }
-  } finally {
-
+    // on successful log in, refresh page to update isLoggedIn state in auth
+    // if connected react router was used, AuthLogin container would not update since isLoggedIn
+    // is an independant piece of state
+    location.reload();
   }
 }
 
@@ -50,7 +46,30 @@ function* login({ username, password }: UserInfo) {
  */
 function* register({ username, password, confirmPassword }: UserInfo) {
   yield put(actions.registerStart());
-  const { status } = yield call(fetch, '/api/auth/register', {
+
+  // validate form fields
+  if (username.length === 0) {
+    yield put(actions.registerFail('Username cannot be empty'));
+    yield put({ type: types.CANCEL_LOGIN });
+  }
+
+  if (password.length === 0) {
+    yield put(actions.registerFail('Password cannot be empty'));
+    yield put({ type: types.CANCEL_LOGIN });
+  }
+
+  if (confirmPassword.length === 0) {
+    yield put(actions.registerFail('Confirm password cannot be empty'));
+    yield put({ type: types.CANCEL_LOGIN });
+  }
+
+  if (password !== confirmPassword) {
+    yield put(actions.registerFail('Password and confirm password must match'));
+    yield put({ type: types.CANCEL_LOGIN });
+  }
+
+  // make fetch request after form data validated
+  const registerStream = yield call(fetch, '/api/auth/register', {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -62,8 +81,11 @@ function* register({ username, password, confirmPassword }: UserInfo) {
     }),
   });
 
-  if (status !== 200) {
-    yield put(actions.registerFail());
+  if (registerStream.status !== 200) {
+    const { error } = yield call([registerStream, 'json']);
+
+    // send error message to front end
+    yield put(actions.registerFail(error));
     yield put({ type: types.CANCEL_LOGIN });
   } else {
     yield put(actions.registerPass());
