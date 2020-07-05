@@ -7,18 +7,24 @@ interface PropTypes {
   deleteThis(): any;
 }
 
+/**
+ * Displays an Email
+ */
 const email: FC<PropTypes> = ({ emailData, deleteThis }) => {
   const {
     from, to, subject, body,
   } = emailData;
 
   return (
-    <div style={{ borderBottom: '1px solid black' }}>
+    <div className="email-item">
       From: {from}
-      To: {to.map((r) => <span key={r}>{r}</span>)}
       <br />
-      Subject: {subject}
-      <p>{body}</p>
+      <ul>
+        To: {to.map((r) => <li key={r}>{`- ${r}`}</li>)}
+      </ul>
+      <br />
+      <h4><strong>{subject.length > 0 ? subject : '[No Subject]'}</strong></h4>
+      <p>{body.length > 0 ? body : 'This message has no content.'}</p>
       <button type="submit" onClick={deleteThis}>Delete</button>
     </div>
   );
