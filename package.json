@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "docker-compose up --build",
-    "test:api": "docker build ./server -f ./server/Dockerfile.test -t nm/server-test && docker run nm/server-test",
+    "test:api": "docker build ./server -f ./server/Dockerfile.test -t nm/server-test && docker run nm/server-test npm run test",
     "test:client": "docker build ./client -f ./client/Dockerfile.test -t nm/client-test && docker run nm/client-test"
   },
   "keywords": [],
