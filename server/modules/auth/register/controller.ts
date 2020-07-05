@@ -20,7 +20,6 @@ const controller: RegistrationController = {
    */
   validateFields(req: Request, res: Response, next: NextFunction): void {
     const { username, password, confirmPassword } = req.body;
-    console.log(req.body);
 
     // username field validations
     if (username === undefined) {

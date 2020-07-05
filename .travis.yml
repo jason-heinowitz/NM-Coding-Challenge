@@ -1,12 +1,7 @@
 sudo: required
 services:
   - docker
-before_install:
-- docker build ./server -f ./server/Dockerfile.test -t nm/server-test
 script:
-- docker run -e USER_DATABASE -e JWT_SECRET -e EMAIL_DATABASE nm/server-test
-  npm run test
-after_success:
 - docker build -t nm/client ./client
 - docker build -t nm/server ./server
 - docker build -t nm/nginx ./nginx
