@@ -109,6 +109,19 @@ $xlarge-break: 1201px;
         flex-direction: column-reverse;
         align-items: center;
       }
+
+      @media screen and (min-width: $medium-break) {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: flex-start;
+      }
+
+      .form {
+        @media screen and (min-width: $medium-break) {
+          max-width: 400px;
+        }
+      }
     }
 
     #email-container {
