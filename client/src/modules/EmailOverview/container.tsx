@@ -45,7 +45,8 @@ const container: FC<EmailOverviewContainer> = (props) => {
         )
         : (
           <>
-            {url === '/compose' ? <Link to="/"><button className="compose" type="button">Minimize</button></Link> : <Link to="compose"><button className="compose" type="button">Compose</button></Link>}
+            {url === '/compose' ? <Link to="/" className="btn compose"><span>Minimize</span></Link> : <Link to="compose" className="btn compose"><span>Compose</span></Link>}
+            <div className="clear" />
 
             <Route path="/compose">
               <NewEmailForm isSending={props.isSending} send={props.sendEmail} />

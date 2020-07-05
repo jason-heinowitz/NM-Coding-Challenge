@@ -44,7 +44,7 @@ const NewEmail: FC<PropTypes> = ({ isSending, send }) => {
   }
 
   return (
-    <div className="form">
+    <div className="form" onClick={() => (subjectWarn ? setSubjectWarn(false) : '')}>
       <label htmlFor="recipients">Recipients</label>
       <input type="text" id="recipients" name="recipients" onChange={(e) => setTo(e.target.value)} />
 

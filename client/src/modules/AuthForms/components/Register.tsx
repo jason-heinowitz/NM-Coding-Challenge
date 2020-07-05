@@ -29,7 +29,7 @@ const Register: FC<PropTypes> = ({ submit, status }) => {
       <input type="password" name="register-confirm-password" id="register-confirm-password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
 
       <button disabled={isLoggingIn || isRegistering} type="submit" onClick={(): void => submit({ username, password, confirmPassword })} className="submit" data-test="register-submit">{isRegistering ? 'Registering...' : 'Sign Up'}</button>
-      {registerFailed ? <p className="auth-fail-message">{registerFailed}</p> : ''}
+      {registerFailed ? <p className="auth-fail-message">{registerFailed}</p> : <p>‏‏‎ ‎</p>}
     </div>
   );
 };

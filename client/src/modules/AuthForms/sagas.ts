@@ -12,6 +12,19 @@ import { UserInfo } from './interfaces';
  */
 function* login({ username, password }: UserInfo) {
   yield put(actions.loginStart());
+
+  // validate form fields
+  if (username.length === 0) {
+    yield put(actions.loginFail('Username cannot be empty'));
+    yield put({ type: types.CANCEL_LOGIN });
+  }
+
+  if (password.length === 0) {
+    yield put(actions.loginFail('Password cannot be empty'));
+    yield put({ type: types.CANCEL_LOGIN });
+  }
+
+  // make fetch request after form fields validated
   const loginStream = yield call(fetch, '/api/auth/login', {
     method: 'POST',
     headers: {
@@ -102,8 +115,10 @@ function* watchAuth() {
   while (true) {
     // wait for log in trigger
     // use take instead of takeLeading do differentiate between methods to run
+    // safe to use take since a cancal login trigger must activate before listening for another auth trigger
     const toLogin = yield take([types.LOGIN, types.REGISTER]);
 
+    // fork action to allow for concurrent saga calls
     let action;
     switch (toLogin.type) {
       case (types.LOGIN):
@@ -121,6 +136,10 @@ function* watchAuth() {
 
     switch (deAuthenticate.type) {
       case (types.CANCEL_LOGIN):
+        /**
+         * by cancelling a saga, execution of current saga will immediately
+         * stop, preventing unnessesary continuation of function code
+         */
         yield cancel(action);
         break;
       default:
