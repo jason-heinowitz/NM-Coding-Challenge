@@ -1,5 +1,5 @@
 import {
-  put, call, take, fork, cancel, cancelled,
+  put, call, take, fork, cancel, delay,
 } from 'redux-saga/effects';
 
 import * as types from './sagaTypes';
@@ -46,6 +46,8 @@ function* login({ username, password }: UserInfo) {
   } else {
     yield put(actions.loginPass());
 
+    // delay so user understands that login attempt was successful
+    yield delay(1000);
     // on successful log in, refresh page to update isLoggedIn state in auth
     // if connected react router was used, AuthLogin container would not update since isLoggedIn
     // is an independant piece of state
@@ -102,6 +104,10 @@ function* register({ username, password, confirmPassword }: UserInfo) {
     yield put({ type: types.CANCEL_LOGIN });
   } else {
     yield put(actions.registerPass());
+
+    // delay so user understands that register attempt was successful
+    yield delay(1000);
+
     location.reload();
   }
 }

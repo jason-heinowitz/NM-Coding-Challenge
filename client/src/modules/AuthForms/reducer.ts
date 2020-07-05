@@ -6,6 +6,8 @@ const initialState: AuthFormsReducer = {
   isRegistering: false,
   loginFailed: '',
   registerFailed: '',
+  loginSuccess: false,
+  registerSuccess: false,
 };
 
 /**
@@ -25,6 +27,7 @@ const reducer = (state = initialState, action: Action): AuthFormsReducer => {
       return ({
         ...state,
         isLoggingIn: false,
+        loginSuccess: true,
       });
     case (types.LOGIN_FAIL):
       return ({
@@ -45,6 +48,7 @@ const reducer = (state = initialState, action: Action): AuthFormsReducer => {
       return ({
         ...state,
         isRegistering: false,
+        registerSuccess: true,
       });
     case (types.REGISTER_FAIL):
       return ({

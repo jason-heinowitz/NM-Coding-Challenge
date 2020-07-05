@@ -22,6 +22,8 @@ export interface AuthFormsReducer {
   isRegistering: boolean;
   loginFailed?: string;
   registerFailed?: string;
+  loginSuccess?: boolean;
+  registerSuccess?: boolean;
 }
 
 export interface MapDispatch {
