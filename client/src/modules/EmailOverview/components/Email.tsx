@@ -23,8 +23,8 @@ const email: FC<PropTypes> = ({ emailData, deleteThis }) => {
         To: {to.map((r) => <li key={r}>{`- ${r}`}</li>)}
       </ul>
       <br />
-      <h4><strong>{subject}</strong></h4>
-      <p>{body}</p>
+      <h4><strong>{subject.length > 0 ? subject : '[No Subject]'}</strong></h4>
+      <p>{body.length > 0 ? body : 'This message has no content.'}</p>
       <button type="submit" onClick={deleteThis}>Delete</button>
     </div>
   );

@@ -63,6 +63,14 @@ $xlarge-break: 1201px;
       }
     }
 
+    #logout {
+      @media screen and (min-width: 0) {
+        padding: 0.2rem 0.5rem;
+        display: block;
+        margin: 0 auto;
+      }
+    }
+
     button {
       border: 1px solid black;
       border-radius: 5px;

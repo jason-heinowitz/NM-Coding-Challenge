@@ -39,7 +39,7 @@ const container: FC<AuthLoginContainer> = (props) => {
       { props.isLoggedIn
         ? (
           <div>
-            <button type="submit" onClick={props.logout}>Logout</button>
+            <button id="logout" type="submit" onClick={props.logout}>Logout</button>
             <props.isAuthedComponent />
           </div>
         )
