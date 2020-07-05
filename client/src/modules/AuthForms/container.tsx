@@ -17,20 +17,15 @@ const mapDispatchToProps = (dispatch: any): MapDispatch => ({
   register: (userInfo: UserInfo) => dispatch(actions.register(userInfo)),
 });
 
-const container: FC<AuthFormsContainer> = (props) => {
-  // give feedback to user than their form submission is being processed
-  const currentAction = props.isLoggingIn
-    ? 'Logging in...'
-    : props.isRegistering
-      ? 'Registering...' : '';
+const container: FC<AuthFormsContainer> = ({
+  login, register, isLoggingIn, isRegistering,
+}) =>
+// give feedback to user than their form submission is being processed
 
-  return (
-    <div>
-      <Login submit={props.login} />
-      <Register submit={props.register} />
-      {currentAction}
+  (
+    <div id="auth-forms-container">
+      <Login submit={login} status={{ isLoggingIn, isRegistering }} />
+      <Register submit={register} status={{ isLoggingIn, isRegistering }} />
     </div>
   );
-};
-
 export default connect(mapStateToProps, mapDispatchToProps)(container);

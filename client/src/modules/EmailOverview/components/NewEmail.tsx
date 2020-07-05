@@ -16,20 +16,14 @@ const NewEmail: FC<PropTypes> = ({ isSending, send }) => {
 
   return (
     <div className="form">
-      <label htmlFor="recipients">
-        Recipients
-        <input type="text" onChange={(e) => setTo(e.target.value)} />
-      </label>
+      <label htmlFor="recipients">Recipients</label>
+      <input type="text" id="recipients" name="recipients" onChange={(e) => setTo(e.target.value)} />
 
-      <label htmlFor="subject">
-        Subject
-        <input type="text" onChange={(e) => setSubject(e.target.value)} />
-      </label>
+      <label htmlFor="subject">Subject</label>
+      <input type="text" id="subject" name="subject" onChange={(e) => setSubject(e.target.value)} />
 
-      <label htmlFor="body">
-        Body
-        <textarea onChange={(e) => setBody(e.target.value)} />
-      </label>
+      <label htmlFor="body">Body </label>
+      <textarea id="body" name="body" onChange={(e) => setBody(e.target.value)} />
 
       <button type="submit" onClick={() => send({ to, subject, body })}>Send</button>
       {isSending ? <span>Sending...</span> : ''}

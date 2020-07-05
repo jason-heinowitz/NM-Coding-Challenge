@@ -6,23 +6,26 @@ import { Switch, Route, Link } from 'react-router-dom';
 
 import store, { history } from './store';
 import { AuthLoginContainer, AuthFormsContainer, EmailOverviewContainer } from './modules';
+import './styles.scss';
 
 /**
  * Contains all components for the application
  * Connects store and react router to application
  */
 const App: FC<{}> = () => (
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <h1 data-test="welcome-message">Welcome to Re(act)-Mail!</h1>
+  <div className="app">
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <h1 id="title" data-test="welcome-message">Re(act)-Mail</h1>
 
-      <Switch>
-        <Route path="/*">
-          <AuthLoginContainer notAuthedComponent={AuthFormsContainer} isAuthedComponent={EmailOverviewContainer} />
-        </Route>
-      </Switch>
-    </ConnectedRouter>
-  </Provider>
+        <Switch>
+          <Route path="/*">
+            <AuthLoginContainer notAuthedComponent={AuthFormsContainer} isAuthedComponent={EmailOverviewContainer} />
+          </Route>
+        </Switch>
+      </ConnectedRouter>
+    </Provider>
+  </div>
 );
 
 export default App;

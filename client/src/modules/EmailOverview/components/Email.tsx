@@ -16,11 +16,14 @@ const email: FC<PropTypes> = ({ emailData, deleteThis }) => {
   } = emailData;
 
   return (
-    <div style={{ borderBottom: '1px solid black' }}>
+    <div className="email-item">
       From: {from}
-      To: {to.map((r) => <span key={r}>{r}</span>)}
       <br />
-      Subject: {subject}
+      <ul>
+        To: {to.map((r) => <li key={r}>{`- ${r}`}</li>)}
+      </ul>
+      <br />
+      <h4><strong>{subject}</strong></h4>
       <p>{body}</p>
       <button type="submit" onClick={deleteThis}>Delete</button>
     </div>

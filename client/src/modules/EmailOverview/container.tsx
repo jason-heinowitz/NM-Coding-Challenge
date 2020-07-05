@@ -29,26 +29,32 @@ const mapDispatchToProps = (dispatch: any): MapDispatch => ({
 const container: FC<EmailOverviewContainer> = (props) => {
   if (props.emails === null && !props.isFetching) props.fetchEmails();
 
-  if (props.isFetching || props.emails === null) {
-    return (
-      <div>
-        <p>Fetching emails...</p>
-      </div>
-    );
-  }
-
   const { url } = useRouteMatch();
 
   return (
-    <div>
+    <div id="email-container">
       <h2>Inbox</h2>
-      {url === '/compose' ? <Link to="/"><button type="button">Minimize</button></Link> : <Link to="compose"><button type="button">Compose</button></Link>}
+      {/**
+         * If fetching emails, show loading text before displaying emails or lack thereof
+         */}
+      {props.isFetching || props.emails === null
+        ? (
+          <div>
+            <p>Fetching emails...</p>
+          </div>
+        )
+        : (
+          <>
+            {url === '/compose' ? <Link to="/"><button className="compose" type="button">Minimize</button></Link> : <Link to="compose"><button className="compose" type="button">Compose</button></Link>}
 
-      <Route path="/compose">
-        <NewEmailForm isSending={props.isSending} send={props.sendEmail} />
-      </Route>
-
-      {props.emails.length > 0 ? <DisplayEmails emails={props.emails} deleteCallback={props.deleteEmail} /> : <p>No emails yet :(</p>}
+            <Route path="/compose">
+              <NewEmailForm isSending={props.isSending} send={props.sendEmail} />
+            </Route>
+            <div>
+              {props.emails.length > 0 ? <DisplayEmails emails={props.emails.reverse()} deleteCallback={props.deleteEmail} /> : <p>No emails yet :(</p>}
+            </div>
+          </>
+        )}
     </div>
   );
 };
