@@ -17,6 +17,8 @@ $xlarge-break: 1201px;
     @include reset;
   }
 
+  font-family: 'Roboto', sans-serif;
+
   overflow-x: hidden;
 
   .app {
@@ -58,7 +60,6 @@ $xlarge-break: 1201px;
       button {
         @media screen and (min-width: 0) {
           padding: 0.5rem 0;
-          transition: ease-in 0.1s background-color;
           margin-bottom: 0.4rem;
         }
       }
@@ -80,6 +81,10 @@ $xlarge-break: 1201px;
       @media screen and (min-width: $mobile-break) {
         padding: 0.5rem 2rem;
       }
+
+      &:hover {
+        background-color: lightseagreen;
+      }
     }
 
     button, .btn {
@@ -90,6 +95,7 @@ $xlarge-break: 1201px;
       color: black;
 
       &:hover {
+        transition: ease-in 0.1s background-color;
         cursor: pointer;
       }
     }
@@ -121,6 +127,12 @@ $xlarge-break: 1201px;
         @media screen and (min-width: $medium-break) {
           max-width: 400px;
         }
+
+        button {
+          &:hover {
+            background-color: lightgreen;
+          }
+        }
       }
     }
 
@@ -148,6 +160,10 @@ $xlarge-break: 1201px;
 
         @media screen and (min-width: $mobile-break) {
           padding: 0.5rem 2rem;
+        }
+
+        &:hover {
+          background-color: lightskyblue;
         }
 
         span {
@@ -193,6 +209,11 @@ $xlarge-break: 1201px;
           @media screen and (min-width: 0) {
             padding: 0.2rem 0.5rem;
             margin: 0.5rem 0;
+          }
+
+          &:hover {
+            color: lightgray;
+            background-color: red;
           }
         }
       }

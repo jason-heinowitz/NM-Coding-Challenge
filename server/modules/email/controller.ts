@@ -49,7 +49,7 @@ const controller: EmailController = {
     const { username } = res.locals;
 
     // get all emails where the recipient is the current user
-    db.emails.find({ user: `${username}@teamcatsnake.com` }, (err: Error, results: Email[]) => {
+    db.emails.find({ user: `${username}@postql.io` }, (err: Error, results: Email[]) => {
       if (err) {
         return next({
           log: 'Error retrieving user\'s emails',
@@ -96,7 +96,7 @@ const controller: EmailController = {
     // create an email for each recipient of the email to enable induvidual deletions of an email from user's inbox
     recipients.forEach((recipient: string) => {
       const email = {
-        from: `${username}@teamcatsnake.com`,
+        from: `${username}@postql.io`,
         user: `${recipient}`,
         to: recipients,
         subject,
@@ -134,7 +134,7 @@ const controller: EmailController = {
       }
 
       // check if user actually received email they're attempting to update
-      if (foundEmail.user !== `${username}@teamcatsnake.com`) {
+      if (foundEmail.user !== `${username}@postql.io`) {
         return next({
           log: 'User attempted to delete email that they weren\'t a recipient of',
           code: 403,

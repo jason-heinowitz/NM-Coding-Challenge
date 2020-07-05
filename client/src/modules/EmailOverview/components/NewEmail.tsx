@@ -28,7 +28,7 @@ const NewEmail: FC<PropTypes> = ({ isSending, send }) => {
     }
 
     // all recipients in recipients field must be valid addresses
-    const emails = to.split(',').map((address) => address.trim()).filter((address) => !address.endsWith('@teamcatsnake.com'));
+    const emails = to.split(',').map((address) => address.trim()).filter((address) => !address.endsWith('@postql.io'));
     if (emails.length > 0) {
       alert('Invalid email address in recipients field');
       return;
