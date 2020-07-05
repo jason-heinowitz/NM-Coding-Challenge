@@ -2,13 +2,13 @@ sudo: required
 services:
   - docker
 script:
-- docker build -t nm/client ./client
-- docker build -t nm/server ./server
-- docker build -t nm/nginx ./nginx
+- docker build -t jheinowitz/nm-client ./client
+- docker build -t jheinowitz/nm-server ./server
+- docker build -t jheinowitz/nm-nginx ./nginx
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-- docker push nm/client
-- docker push nm/server
-- docker push nm/nginx
+- docker push jheinowitz/nm-client
+- docker push jheinowitz/nm-server
+- docker push jheinowitz/nm-nginx
 branches:
   only:
   - dev
