@@ -75,6 +75,10 @@ $xlarge-break: 1201px;
       border: 1px solid black;
       border-radius: 5px;
       background: none;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
 
     #title {

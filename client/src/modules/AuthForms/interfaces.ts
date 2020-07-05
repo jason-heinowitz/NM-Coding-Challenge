@@ -1,5 +1,6 @@
 export interface Action {
   type: string;
+  errorMessage?: string;
 }
 
 export interface UserInfo {
@@ -19,6 +20,8 @@ export interface RegisterAction extends Action {
 export interface AuthFormsReducer {
   isLoggingIn: boolean;
   isRegistering: boolean;
+  loginFailed?: string;
+  registerFailed?: string;
 }
 
 export interface MapDispatch {

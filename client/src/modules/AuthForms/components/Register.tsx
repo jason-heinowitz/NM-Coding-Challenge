@@ -14,7 +14,7 @@ const Register: FC<PropTypes> = ({ submit, status }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const { isLoggingIn, isRegistering } = status;
+  const { isLoggingIn, isRegistering, registerFailed } = status;
 
   return (
     <div className="form" data-test="register-form">

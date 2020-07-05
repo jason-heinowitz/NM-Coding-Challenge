@@ -13,7 +13,21 @@ interface PropTypes {
 const Login: FC<PropTypes> = ({ submit, status }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { isLoggingIn, isRegistering } = status;
+  const { isLoggingIn, isRegistering, loginFailed } = status;
+
+  function validateInput(): void {
+    if (username.length === 0) {
+      alert('Username cannot be empty.');
+      return;
+    }
+
+    if (password.length === 0) {
+      alert('Password cannot be empty');
+      return;
+    }
+
+    submit({ username, password });
+  }
 
   return (
     <div className="form" data-test="login-form">
@@ -24,7 +38,8 @@ const Login: FC<PropTypes> = ({ submit, status }) => {
       <label htmlFor="login-password" data-test="login-password">Password</label>
       <input type="password" name="login-password" id="login-password" value={password} onChange={(e) => setPassword(e.target.value)} />
 
-      <button disabled={isLoggingIn || isRegistering} type="submit" onClick={() => submit({ username, password })} className="submit" data-test="login-submit">{isLoggingIn ? 'Logging in...' : 'Log In'}</button>
+      <button disabled={isLoggingIn || isRegistering} type="submit" onClick={(): void => validateInput()} className="submit" data-test="login-submit">{isLoggingIn ? 'Logging in...' : 'Log In'}</button>
+      {loginFailed ? <p>{loginFailed}</p> : ''}
     </div>
   );
 };

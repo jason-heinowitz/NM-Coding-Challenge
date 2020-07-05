@@ -13,7 +13,7 @@ import { UserInfo } from './interfaces';
 function* login({ username, password }: UserInfo) {
   try {
     yield put(actions.loginStart());
-    const { status } = yield call(fetch, '/api/auth/login', {
+    const loginStream = yield call(fetch, '/api/auth/login', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -25,8 +25,13 @@ function* login({ username, password }: UserInfo) {
     });
 
     // if login is not good, cancel login saga
-    if (status !== 200) yield put({ type: types.CANCEL_LOGIN });
-    else {
+    if (loginStream.status !== 200) {
+      const { error } = yield call([loginStream, 'json']);
+
+      // if log in fails, pass error message to front end
+      yield put(actions.loginFail(error));
+      yield put({ type: types.CANCEL_LOGIN });
+    } else {
       yield put(actions.loginPass());
 
       // on successful log in, refresh page to update isLoggedIn state in auth
@@ -35,8 +40,7 @@ function* login({ username, password }: UserInfo) {
       location.reload();
     }
   } finally {
-    // on cancel, dispatch loginFail action
-    if (yield cancelled()) yield put(actions.loginFail());
+
   }
 }
 

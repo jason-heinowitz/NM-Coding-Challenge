@@ -10,6 +10,8 @@ import { Login, Register } from './components';
 const mapStateToProps = (state: any): AuthFormsReducer => ({
   isLoggingIn: state.authForms.isLoggingIn,
   isRegistering: state.authForms.isRegistering,
+  loginFailed: state.authForms.loginFailed,
+  registerFailed: state.authForms.registerFailed,
 });
 
 const mapDispatchToProps = (dispatch: any): MapDispatch => ({
@@ -18,14 +20,14 @@ const mapDispatchToProps = (dispatch: any): MapDispatch => ({
 });
 
 const container: FC<AuthFormsContainer> = ({
-  login, register, isLoggingIn, isRegistering,
+  login, register, isLoggingIn, isRegistering, registerFailed, loginFailed,
 }) =>
 // give feedback to user than their form submission is being processed
 
   (
     <div id="auth-forms-container">
-      <Login submit={login} status={{ isLoggingIn, isRegistering }} />
-      <Register submit={register} status={{ isLoggingIn, isRegistering }} />
+      <Login submit={login} status={{ isLoggingIn, isRegistering, loginFailed }} />
+      <Register submit={register} status={{ isLoggingIn, isRegistering, registerFailed }} />
     </div>
   );
 export default connect(mapStateToProps, mapDispatchToProps)(container);

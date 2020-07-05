@@ -10,8 +10,9 @@ export const loginPass = (): Action => ({
   type: types.LOGIN_PASS,
 });
 
-export const loginFail = (): Action => ({
+export const loginFail = (errorMessage: string): Action => ({
   type: types.LOGIN_FAIL,
+  errorMessage,
 });
 
 // register actions
