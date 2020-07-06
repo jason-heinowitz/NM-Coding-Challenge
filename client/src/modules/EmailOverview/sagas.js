@@ -89,7 +89,7 @@ function* watchFetchEmails() {
 
 /**
  * Waits for request to delete a specific email
- * takeEvery to allow for concurrent deletions
+ * takeEvery allows for concurrent deletions
  */
 function* watchDeleteEmail() {
   yield takeEvery(types.DELETE_EMAIL, deleteEmail);
@@ -97,6 +97,7 @@ function* watchDeleteEmail() {
 
 /**
  * Waits for request to send an email
+ * takeLeading ensures double emails are not sent
  */
 function* watchSendEmail() {
   yield takeLeading(types.SEND_EMAIL, sendEmail);

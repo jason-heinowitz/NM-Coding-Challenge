@@ -43,6 +43,13 @@ const NewEmail: FC<PropTypes> = ({ isSending, send }) => {
     send({ to, subject, body });
   }
 
+  // dynamically assign send button text based on state
+  let sendButtonText;
+
+  if (isSending) sendButtonText = 'Sending...';
+  else if (subjectWarn) sendButtonText = 'Are you sure? (Subject empty)';
+  else sendButtonText = 'Send';
+
   return (
     <div className="form" onClick={() => (subjectWarn ? setSubjectWarn(false) : '')}>
       <label htmlFor="recipients">Recipients (@postql.io)</label>
@@ -54,7 +61,7 @@ const NewEmail: FC<PropTypes> = ({ isSending, send }) => {
       <label htmlFor="body">Body </label>
       <textarea id="body" name="body" onChange={(e) => setBody(e.target.value)} />
 
-      <button type="submit" onClick={(): void => validateInput()}>{isSending ? <span>Sending...</span> : subjectWarn ? 'Are you sure? (Subject empty)' : 'Send'}</button>
+      <button type="submit" onClick={(): void => validateInput()}>{sendButtonText}</button>
     </div>
   );
 };

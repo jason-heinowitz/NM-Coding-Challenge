@@ -14,9 +14,12 @@ interface RegistrationController {
   createSession(req: Request, res: Response, next: NextFunction): void;
 }
 
+/**
+ * Handle all register-related actions
+ */
 const controller: RegistrationController = {
   /**
-   * Ensures all fields are passed to server correctly, returning error messages if found out of spec
+   * Ensures all fields are passed to server correctly, returning error message if found out of spec
    */
   validateFields(req: Request, res: Response, next: NextFunction): void {
     const { username, password, confirmPassword } = req.body;
@@ -90,7 +93,7 @@ const controller: RegistrationController = {
 
     const query = `SELECT id FROM users WHERE username='${username}'`;
     db.query(query, (err, response) => {
-      // if error while querying db, return something other than boolean
+      // if error while querying db
       if (err) {
         return next({
           log: 'Error querying database for username during registration',

@@ -20,6 +20,9 @@ interface Email {
   body?: string;
 }
 
+/**
+ * Handles retrieving, sending, and deleting user's emails
+ */
 const controller: EmailController = {
   /**
    * Validate user's current JWT, returning error if invalid
@@ -117,13 +120,13 @@ const controller: EmailController = {
       }));
   },
   /**
-   * Add user to list of users that have deleted (just ignored) an email so it does not change for other users in addition to keeping emails as permanant records
+   * Delete specific user's copy of email. If there are multiple recipients of an email, their copies are unaffected
    */
   deleteEmail(req: Request, res: Response, next: NextFunction): void {
     const { id } = req.body;
     const { username } = res.locals;
 
-    // find email to update ignore list for
+    // check if email exists
     db.emails.findById(id, (err, foundEmail: Email) => {
       if (err) {
         return next({
@@ -133,7 +136,7 @@ const controller: EmailController = {
         });
       }
 
-      // check if user actually received email they're attempting to update
+      // check if user actually received email they're attempting to delete
       if (foundEmail.user !== `${username}@postql.io`) {
         return next({
           log: 'User attempted to delete email that they weren\'t a recipient of',
@@ -142,7 +145,7 @@ const controller: EmailController = {
         });
       }
 
-      // update email with new ignore list
+      // delete email
       db.emails.deleteOne({ _id: id }, (deleteErr) => {
         if (deleteErr) {
           return next({
@@ -152,7 +155,7 @@ const controller: EmailController = {
           });
         }
 
-        // email has been successfully saved back to the db
+        // email has been successfully deleted from db
         return next();
       });
     });

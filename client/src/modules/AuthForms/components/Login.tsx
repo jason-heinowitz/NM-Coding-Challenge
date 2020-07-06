@@ -8,7 +8,6 @@ interface PropTypes {
 
 /**
  * Login form for unauthenticated user
- * @param {PropTypes} props contains callback to submit login request
  */
 const Login: FC<PropTypes> = ({ submit, status }) => {
   const [username, setUsername] = useState('');
@@ -17,10 +16,12 @@ const Login: FC<PropTypes> = ({ submit, status }) => {
     isLoggingIn, isRegistering, loginFailed, loginSuccess,
   } = status;
 
+  // enable enter key support to form inputs
   function submitForm(key: string): void {
     if (key === 'Enter') submit({ username, password });
   }
 
+  // dynamically assign log in button text depending on state
   let logInButtonText;
 
   if (loginSuccess) logInButtonText = 'Log in successful. Redirecting...';

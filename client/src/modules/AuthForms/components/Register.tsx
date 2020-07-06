@@ -8,7 +8,6 @@ interface PropTypes {
 
 /**
  * Registration form for unauthenticated user
- * @param {PropTypes} props contains callback to submit new user registration info
  */
 const Register: FC<PropTypes> = ({ submit, status }) => {
   const [username, setUsername] = useState('');
@@ -18,10 +17,12 @@ const Register: FC<PropTypes> = ({ submit, status }) => {
     isLoggingIn, isRegistering, registerFailed, registerSuccess,
   } = status;
 
+  // enable enter key support to form inputs
   function submitForm(key: string): void {
     if (key === 'Enter') submit({ username, password, confirmPassword });
   }
 
+  // dynamically assign register button text depending on state
   let registerButtonText;
 
   if (registerSuccess) registerButtonText = 'Registration successful. Redirecting...';
