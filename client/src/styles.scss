@@ -116,7 +116,7 @@ $xlarge-break: 1201px;
         align-items: center;
       }
 
-      @media screen and (min-width: $medium-break) {
+      @media screen and (min-width: $large-break) {
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: space-around;

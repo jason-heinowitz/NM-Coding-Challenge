@@ -8,7 +8,6 @@ import * as actions from './actions';
  */
 function* checkCookies() {
   yield put(actions.checkCookiesStart());
-  console.log('checking cookies...');
 
   const { status } = yield call(fetch, '/api/auth/validate');
 
