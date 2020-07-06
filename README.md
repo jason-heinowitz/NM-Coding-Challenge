@@ -17,6 +17,6 @@ Don't have Docker? Visit live at [email.postql.io](https://email.postql.io).
 ![Email inbox with logout and compose buttons](https://i.imgur.com/XVC8tne.png "Empty inbox")After successfully logging in or registering, you will be greeted with an empty inbox. Click compose to continue to the new email form.
 
 ![Compose new email form with recipients, subject, and body fields](https://i.imgur.com/WaKkGWw.png "Compose email form")
-You can send an email to any @postql.io address.
+You can send an email to any @postql.io address. Multiple recipients are comma-delimited.
 
 ![Email will let user know that an empty subject and/or body is intentional](https://i.imgur.com/3eJQtpA.png "Email without subject nor body") If you decide to not send a subject and/or body, it will be clearly communicated to the recipient.
