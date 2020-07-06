@@ -6,9 +6,9 @@ Bootstrapped with [react-kickstart](https://www.npmjs.com/package/react-ks) ([Gi
 
 # About
 
-A modern, minimilistic take on  an email service for exclusive use within the postql.io ([Github](https://github.com/oslabs-beta/PostQL)) environment. Featuring an over 80% TypeScript codebase, Redux-Saga, and and extensible REST api, I present: Re-Mail.
+A modern, minimilistic take on  an email service for exclusive use within the [postql.io](https://postql.io) ([Github](https://github.com/oslabs-beta/PostQL)) environment. Featuring an over 80% TypeScript codebase, Redux-Saga, and and extensible REST api, I present: Re-Mail.
 
-Don't have Docker? Visit live at email.postql.io.
+Don't have Docker? Visit live at [email.postql.io](https://email.postql.io).
 
 # How to use
 
