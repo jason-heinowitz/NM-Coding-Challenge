@@ -39,6 +39,7 @@ const container: FC<AuthLoginContainer> = (props) => {
       { props.isLoggedIn
         ? (
           <div>
+            {/* Display centered log out button after being authenticated */}
             <button id="logout" type="submit" onClick={props.logout}>Logout</button>
             <props.isAuthedComponent />
           </div>
@@ -46,8 +47,8 @@ const container: FC<AuthLoginContainer> = (props) => {
         : (
           <> {/**
                 * Always edirect user to home url if they are not authenticated
-                * Form will show up no matter the url, but force user back to '/'
-                * for consistency
+                * Forms will show up no matter the url, but force user back to '/'
+                * for consistency purposes
                 * */ }
             {url !== '/' ? <Redirect to="/" />
               : <props.notAuthedComponent />}

@@ -49,7 +49,7 @@ function* login({ username, password }: UserInfo) {
     // delay so user understands that login attempt was successful
     yield delay(1000);
     // on successful log in, refresh page to update isLoggedIn state in auth
-    // if connected react router was used, AuthLogin container would not update since isLoggedIn
+    // if connected react router was used to push '/', AuthLogin container would not update since isLoggedIn
     // is an independant piece of state
     location.reload();
   }
@@ -96,6 +96,7 @@ function* register({ username, password, confirmPassword }: UserInfo) {
     }),
   });
 
+  // if registration fails, parse stream for json data to give user feedback on error
   if (registerStream.status !== 200) {
     const { error } = yield call([registerStream, 'json']);
 
@@ -113,8 +114,8 @@ function* register({ username, password, confirmPassword }: UserInfo) {
 }
 
 /**
- * Wait for log in/ log out triggers in a cycle to declaratively prevent authentication cancel
- * triggers before logging in and vice-versa.
+ * Wait for auth/ cancel auth triggers in a cycle to declaratively prevent
+ * concurrent or duplicate triggers
  */
 function* watchAuth() {
   // continually run through watching auth for login -> logout cycle

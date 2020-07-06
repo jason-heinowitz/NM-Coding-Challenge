@@ -29,6 +29,7 @@ const mapDispatchToProps = (dispatch: any): MapDispatch => ({
 const container: FC<EmailOverviewContainer> = (props) => {
   if (props.emails === null && !props.isFetching) props.fetchEmails();
 
+  // get current url
   const { url } = useRouteMatch();
 
   return (
@@ -45,6 +46,7 @@ const container: FC<EmailOverviewContainer> = (props) => {
         )
         : (
           <>
+            {/* if url is /compose, display compose email form and option to minimize form, else just show button to display compose form */}
             {url === '/compose' ? <Link to="/" className="btn compose"><span>Minimize</span></Link> : <Link to="compose" className="btn compose"><span>Compose</span></Link>}
             <div className="clear" />
 

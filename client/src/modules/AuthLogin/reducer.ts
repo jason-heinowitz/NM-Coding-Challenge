@@ -13,6 +13,7 @@ const initialState: AuthLoginReducer = {
  */
 const reducer = (state = initialState, action: Action): AuthLoginReducer => {
   switch (action.type) {
+    // check cookies actions
     case (types.CHECK_COOKIES_START):
       return {
         ...state,
@@ -30,6 +31,7 @@ const reducer = (state = initialState, action: Action): AuthLoginReducer => {
         isLoggedIn: false,
         isLoggingIn: false,
       };
+    // log out actions
     case (types.LOGOUT_START):
       return {
         ...state,

@@ -4,11 +4,10 @@ import * as types from './sagaTypes';
 import * as actions from './actions';
 
 /**
- * Make request to api, setting user state to logged in if response is 200 else not logged in
+ * Make request to api, setting user state to logged in if response is 200 else set to not logged in
  */
 function* checkCookies() {
   yield put(actions.checkCookiesStart());
-  console.log('checking cookies...');
 
   const { status } = yield call(fetch, '/api/auth/validate');
 
@@ -41,7 +40,8 @@ function* logout() {
  */
 function* watchCookies() {
   /**
-   * A user shouldn't be able to make multiple requests on a single page load
+   * A user shouldn't be able to make multiple requests on a single page load,
+   * which is enforced by takeLeading
    */
   yield takeLeading(types.CHECK_COOKIES, checkCookies);
 }
@@ -50,6 +50,7 @@ function* watchCookies() {
  * Watches for logout trigger
  */
 function* watchLogout() {
+  // only take first logout action to prevent unnecessary errors
   yield takeLeading(types.LOGOUT, logout);
 }
 

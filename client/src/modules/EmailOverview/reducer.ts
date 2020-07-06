@@ -13,6 +13,7 @@ const initialState: EmailOverviewReducer = {
  */
 const reducer = (state = initialState, action: EmailAction): EmailOverviewReducer => {
   switch (action.type) {
+    // fetch email actions
     case (types.FETCH_EMAILS_START):
       return {
         ...state,
@@ -37,6 +38,7 @@ const reducer = (state = initialState, action: EmailAction): EmailOverviewReduce
         emails: state.emails.filter((e) => e._id !== action.id),
         favorites: state.favorites.filter((e) => e._id !== action.id),
       };
+    // send email actions
     case (types.SEND_EMAIL_START):
       return {
         ...state,

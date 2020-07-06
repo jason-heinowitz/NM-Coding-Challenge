@@ -7,6 +7,7 @@ import {
 } from './interfaces';
 import { Login, Register } from './components';
 
+// contains all data on current state of log in and/or registration
 const mapStateToProps = (state: any): AuthFormsReducer => ({
   isLoggingIn: state.authForms.isLoggingIn,
   isRegistering: state.authForms.isRegistering,
@@ -16,11 +17,15 @@ const mapStateToProps = (state: any): AuthFormsReducer => ({
   registerSuccess: state.authForms.registerSuccess,
 });
 
+// callbacks to start saga actions
 const mapDispatchToProps = (dispatch: any): MapDispatch => ({
   login: (userInfo: UserInfo) => dispatch(actions.login(userInfo)),
   register: (userInfo: UserInfo) => dispatch(actions.register(userInfo)),
 });
 
+/**
+ * Contains login and registration forms
+ */
 const container: FC<AuthFormsContainer> = ({
   login, register, isLoggingIn, isRegistering, registerFailed, loginFailed, loginSuccess, registerSuccess,
 }) =>
