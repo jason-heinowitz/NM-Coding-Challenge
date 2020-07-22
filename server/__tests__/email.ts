@@ -20,7 +20,7 @@ describe('email tests', () => {
 
     it('returns 403 when sending an email', (done) => {
       const email: Email = {
-        to: 'taken@teamcatsnake.com',
+        to: 'taken@postql.io',
         subject: 'This shouldn\'t go through',
         body: 'Hello there.',
       };
@@ -76,7 +76,7 @@ describe('email tests', () => {
 
     it('returns 200 when sending an email', (done) => {
       const email: Email = {
-        to: 'taken@teamcatsnake.com',
+        to: 'taken@postql.io',
         subject: 'Hello there',
         body: 'General Kenobi',
       };
@@ -93,7 +93,7 @@ describe('email tests', () => {
 
     it('returns 200 when sending email with multiple recipients', (done) => {
       const email: Email = {
-        to: 'taken@teamcatsnake.com, joe@teamcatsnake.com',
+        to: 'taken@postql.io, joe@postql.io',
         subject: 'Hello there',
         body: 'General Kenobi',
       };
@@ -171,7 +171,7 @@ describe('email tests', () => {
 
     afterAll((done) => {
       const email: Email = {
-        to: 'taken@teamcatsnake.com',
+        to: 'taken@postql.io',
         subject: 'Placeholder',
         body: 'Always send an email after running tests to ensure consistant delete',
       };

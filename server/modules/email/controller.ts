@@ -20,6 +20,9 @@ interface Email {
   body?: string;
 }
 
+/**
+ * Handles retrieving, sending, and deleting user's emails
+ */
 const controller: EmailController = {
   /**
    * Validate user's current JWT, returning error if invalid
@@ -49,7 +52,7 @@ const controller: EmailController = {
     const { username } = res.locals;
 
     // get all emails where the recipient is the current user
-    db.emails.find({ user: `${username}@teamcatsnake.com` }, (err: Error, results: Email[]) => {
+    db.emails.find({ user: `${username}@postql.io` }, (err: Error, results: Email[]) => {
       if (err) {
         return next({
           log: 'Error retrieving user\'s emails',
@@ -96,7 +99,7 @@ const controller: EmailController = {
     // create an email for each recipient of the email to enable induvidual deletions of an email from user's inbox
     recipients.forEach((recipient: string) => {
       const email = {
-        from: `${username}@teamcatsnake.com`,
+        from: `${username}@postql.io`,
         user: `${recipient}`,
         to: recipients,
         subject,
@@ -117,13 +120,13 @@ const controller: EmailController = {
       }));
   },
   /**
-   * Add user to list of users that have deleted (just ignored) an email so it does not change for other users in addition to keeping emails as permanant records
+   * Delete specific user's copy of email. If there are multiple recipients of an email, their copies are unaffected
    */
   deleteEmail(req: Request, res: Response, next: NextFunction): void {
     const { id } = req.body;
     const { username } = res.locals;
 
-    // find email to update ignore list for
+    // check if email exists
     db.emails.findById(id, (err, foundEmail: Email) => {
       if (err) {
         return next({
@@ -133,8 +136,8 @@ const controller: EmailController = {
         });
       }
 
-      // check if user actually received email they're attempting to update
-      if (foundEmail.user !== `${username}@teamcatsnake.com`) {
+      // check if user actually received email they're attempting to delete
+      if (foundEmail.user !== `${username}@postql.io`) {
         return next({
           log: 'User attempted to delete email that they weren\'t a recipient of',
           code: 403,
@@ -142,7 +145,7 @@ const controller: EmailController = {
         });
       }
 
-      // update email with new ignore list
+      // delete email
       db.emails.deleteOne({ _id: id }, (deleteErr) => {
         if (deleteErr) {
           return next({
@@ -152,7 +155,7 @@ const controller: EmailController = {
           });
         }
 
-        // email has been successfully saved back to the db
+        // email has been successfully deleted from db
         return next();
       });
     });

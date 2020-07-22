@@ -7,6 +7,9 @@ interface ValidationController {
   validateUserSession(req: Request, res: Response, next: NextFunction): void;
 }
 
+/**
+ * Handle user validation when loading page for first time
+ */
 const controller: ValidationController = {
   /**
    * Validate user's current JWT, returning error if invalid

@@ -4,6 +4,10 @@ import { AuthFormsReducer, Action } from './interfaces';
 const initialState: AuthFormsReducer = {
   isLoggingIn: false,
   isRegistering: false,
+  loginFailed: '',
+  registerFailed: '',
+  loginSuccess: false,
+  registerSuccess: false,
 };
 
 /**
@@ -16,16 +20,20 @@ const reducer = (state = initialState, action: Action): AuthFormsReducer => {
       return ({
         ...state,
         isLoggingIn: true,
+        loginFailed: '',
+        registerFailed: '',
       });
     case (types.LOGIN_PASS):
       return ({
         ...state,
         isLoggingIn: false,
+        loginSuccess: true,
       });
     case (types.LOGIN_FAIL):
       return ({
         ...state,
         isLoggingIn: false,
+        loginFailed: action.errorMessage,
       });
 
     // register handlers
@@ -33,16 +41,20 @@ const reducer = (state = initialState, action: Action): AuthFormsReducer => {
       return ({
         ...state,
         isRegistering: true,
+        loginFailed: '',
+        registerFailed: '',
       });
     case (types.REGISTER_PASS):
       return ({
         ...state,
         isRegistering: false,
+        registerSuccess: true,
       });
     case (types.REGISTER_FAIL):
       return ({
         ...state,
         isRegistering: false,
+        registerFailed: action.errorMessage,
       });
     default:
       return state;

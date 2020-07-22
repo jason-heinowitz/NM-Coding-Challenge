@@ -1,4 +1,3 @@
-import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -8,6 +7,7 @@ import modules from './modules';
 const app = express();
 const PORT = 5000;
 
+// parse all incoming data
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,6 +19,7 @@ if (process.env.NODE_ENV !== 'test') {
   });
 }
 
+// expose all base api routes
 app.use('/ping', modules.ping);
 app.use('/auth', modules.auth);
 app.use('/email', modules.email);

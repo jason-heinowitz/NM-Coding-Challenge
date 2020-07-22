@@ -1,27 +1,44 @@
 import React, { FC, useState } from 'react';
-import { UserInfo } from '../interfaces';
+import { UserInfo, AuthFormsReducer } from '../interfaces';
 
 interface PropTypes {
   submit(userInfo: UserInfo): any;
+  status: AuthFormsReducer;
 }
 
-const Login: FC<PropTypes> = (props) => {
+/**
+ * Login form for unauthenticated user
+ */
+const Login: FC<PropTypes> = ({ submit, status }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const {
+    isLoggingIn, isRegistering, loginFailed, loginSuccess,
+  } = status;
+
+  // enable enter key support to form inputs
+  function submitForm(key: string): void {
+    if (key === 'Enter') submit({ username, password });
+  }
+
+  // dynamically assign log in button text depending on state
+  let logInButtonText;
+
+  if (loginSuccess) logInButtonText = 'Log in successful. Redirecting...';
+  else if (isLoggingIn) logInButtonText = 'Logging in...';
+  else logInButtonText = 'Log In';
 
   return (
     <div className="form" data-test="login-form">
-      <label htmlFor="username" data-test="username">
-        Username
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-      </label>
+      <h3>Log In</h3>
+      <label htmlFor="login-username" data-test="login-username">Username</label>
+      <input type="text" name="login-username" id="login-username" onKeyDown={(e): void => submitForm(e.key)} value={username} onChange={(e) => setUsername(e.target.value)} />
 
-      <label htmlFor="password" data-test="password">
-        Password
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </label>
+      <label htmlFor="login-password" data-test="login-password">Password</label>
+      <input type="password" name="login-password" id="login-password" onKeyDown={(e): void => submitForm(e.key)} value={password} onChange={(e) => setPassword(e.target.value)} />
 
-      <button type="submit" onClick={() => props.submit({ username, password })} className="submit" data-test="login-submit">Log In</button>
+      <button disabled={isLoggingIn || isRegistering} type="submit" onClick={(): void => submitForm('Enter')} className="submit" data-test="login-submit">{logInButtonText}</button>
+      {loginFailed ? <p className="auth-fail-message">{loginFailed}</p> : <p />}
     </div>
   );
 };

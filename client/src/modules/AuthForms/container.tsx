@@ -7,29 +7,44 @@ import {
 } from './interfaces';
 import { Login, Register } from './components';
 
+// contains all data on current state of log in and/or registration
 const mapStateToProps = (state: any): AuthFormsReducer => ({
   isLoggingIn: state.authForms.isLoggingIn,
   isRegistering: state.authForms.isRegistering,
+  loginFailed: state.authForms.loginFailed,
+  registerFailed: state.authForms.registerFailed,
+  loginSuccess: state.authForms.loginSuccess,
+  registerSuccess: state.authForms.registerSuccess,
 });
 
+// callbacks to start saga actions
 const mapDispatchToProps = (dispatch: any): MapDispatch => ({
   login: (userInfo: UserInfo) => dispatch(actions.login(userInfo)),
   register: (userInfo: UserInfo) => dispatch(actions.register(userInfo)),
 });
 
-const container: FC<AuthFormsContainer> = (props) => {
-  const currentAction = props.isLoggingIn
-    ? 'Logging in...'
-    : props.isRegistering
-      ? 'Registering...' : '';
+/**
+ * Contains login and registration forms
+ */
+const container: FC<AuthFormsContainer> = ({
+  login, register, isLoggingIn, isRegistering, registerFailed, loginFailed, loginSuccess, registerSuccess,
+}) =>
+// give feedback to user than their form submission is being processed
 
-  return (
-    <div>
-      <Login submit={props.login} />
-      <Register submit={props.register} />
-      {currentAction}
+  (
+    <div id="auth-forms-container">
+      <Login
+        submit={login}
+        status={{
+          isLoggingIn, isRegistering, loginFailed, loginSuccess,
+        }}
+      />
+      <Register
+        submit={register}
+        status={{
+          isLoggingIn, isRegistering, registerFailed, registerSuccess,
+        }}
+      />
     </div>
   );
-};
-
 export default connect(mapStateToProps, mapDispatchToProps)(container);

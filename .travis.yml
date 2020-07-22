@@ -1,0 +1,25 @@
+sudo: required
+services:
+  - docker
+script:
+- docker build -t jheinowitz/nm-client ./client
+- docker build -t jheinowitz/nm-server ./server
+- docker build -t jheinowitz/nm-nginx ./nginx
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+- docker push jheinowitz/nm-client
+- docker push jheinowitz/nm-server
+- docker push jheinowitz/nm-nginx
+branches:
+  only:
+  - dev
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: us-east-1
+  app: PostQL
+  env: email
+  bucket_name: elasticbeanstalk-us-east-1-461955714824
+  on:
+    branch: dev
+  access_key_id: "$AWS_ACCESS_KEY"
+  secret_access_key: "$AWS_SECRET_KEY"
