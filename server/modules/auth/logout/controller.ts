@@ -8,6 +8,9 @@ interface LogoutController {
   invalidateSession(req: Request, res: Response, next: NextFunction): void;
 }
 
+/**
+ * Handle all logout actions
+ */
 const controller: LogoutController = {
   /**
    * Check if user is already logged in first, returning error if they are not

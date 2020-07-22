@@ -12,9 +12,12 @@ interface LoginController {
   createSession(req: Request, res: Response, next: NextFunction): void;
 }
 
+/**
+ * Handles all login-related actions
+ */
 const controller: LoginController = {
   /**
-   * Verify that all user-supplied fields are within spec, else throw error
+   * Verify that all user-supplied fields are within spec, else return error
    */
   checkFields(req: Request, res: Response, next: NextFunction): void {
     const { username, password } = req.body;

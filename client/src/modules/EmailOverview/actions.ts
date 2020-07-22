@@ -29,3 +29,15 @@ export const deleteEmailFail = (id: string): EmailAction => ({
   type: types.DELETE_EMAIL_FAIL,
   id,
 });
+
+export const sendEmailStart = (): Action => ({
+  type: types.SEND_EMAIL_START,
+});
+
+export const sendEmailPass = (): Action => ({
+  type: types.SEND_EMAIL_PASS,
+});
+
+export const sendEmailFail = (): Action => ({
+  type: types.SEND_EMAIL_FAIL,
+});

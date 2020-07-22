@@ -5,6 +5,7 @@ const initialState: EmailOverviewReducer = {
   emails: null,
   favorites: [],
   isFetchingEmails: false,
+  isSendingEmail: false,
 };
 
 /**
@@ -12,6 +13,7 @@ const initialState: EmailOverviewReducer = {
  */
 const reducer = (state = initialState, action: EmailAction): EmailOverviewReducer => {
   switch (action.type) {
+    // fetch email actions
     case (types.FETCH_EMAILS_START):
       return {
         ...state,
@@ -19,6 +21,7 @@ const reducer = (state = initialState, action: EmailAction): EmailOverviewReduce
       };
     case (types.FETCH_EMAILS_PASS):
       return {
+        ...state,
         emails: action.emails,
         favorites: action.favorites,
         isFetchingEmails: false,
@@ -34,6 +37,22 @@ const reducer = (state = initialState, action: EmailAction): EmailOverviewReduce
         ...state,
         emails: state.emails.filter((e) => e._id !== action.id),
         favorites: state.favorites.filter((e) => e._id !== action.id),
+      };
+    // send email actions
+    case (types.SEND_EMAIL_START):
+      return {
+        ...state,
+        isSendingEmail: true,
+      };
+    case (types.SEND_EMAIL_PASS):
+      return {
+        ...state,
+        isSendingEmail: false,
+      };
+    case (types.SEND_EMAIL_FAIL):
+      return {
+        ...state,
+        isSendingEmail: false,
       };
     default:
       return state;

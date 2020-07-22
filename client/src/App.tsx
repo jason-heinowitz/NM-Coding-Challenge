@@ -1,38 +1,31 @@
 import React, { FC } from 'react';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
+import { Switch, Route, Link } from 'react-router-dom';
 
-import { Switch, Route } from 'react-router';
+
 import store, { history } from './store';
 import { AuthLoginContainer, AuthFormsContainer, EmailOverviewContainer } from './modules';
+import './styles.scss';
 
-const t1: FC<{}> = () => (
-  <div>
-    <p>not authed</p>
-  </div>
-);
-
-const t2: FC<{}> = () => (
-  <div>
-    <p>is authed</p>
-  </div>
-);
-
+/**
+ * Contains all components for the application
+ * Connects store and react router to application
+ */
 const App: FC<{}> = () => (
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <h1 data-test="welcome-message">Welcome to Re(act)-Mail!</h1>
+  <div className="app">
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <h1 id="title" data-test="welcome-message">Re(act)-Mail</h1>
 
-      <Switch>
-        <Route path="/" exact>
-          <AuthLoginContainer notAuthedComponent={AuthFormsContainer} isAuthedComponent={EmailOverviewContainer} />
-        </Route>
-        <Route path="*">
-          <p>404 not found</p>
-        </Route>
-      </Switch>
-    </ConnectedRouter>
-  </Provider>
+        <Switch>
+          <Route path="/*">
+            <AuthLoginContainer notAuthedComponent={AuthFormsContainer} isAuthedComponent={EmailOverviewContainer} />
+          </Route>
+        </Switch>
+      </ConnectedRouter>
+    </Provider>
+  </div>
 );
 
 export default App;
