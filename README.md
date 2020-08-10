@@ -8,7 +8,13 @@ Bootstrapped with [react-kickstart](https://www.npmjs.com/package/react-ks) ([Gi
 
 A modern, minimilistic take on  an email service for exclusive use within the [postql.io](https://postql.io) ([Github](https://github.com/oslabs-beta/PostQL)) environment. Re-mail features an over 80% TypeScript codebase, Redux-Saga, and and extensible REST api.
 
-Don't have Docker? Visit live at [email.postql.io](https://email.postql.io).
+The REST API is configured to use the ![dotenv](https://www.npmjs.com/package/dotenv) package. Using the following environment variables will enable you to run this application:
+
+`USER_DATABASE="postgres://yqeexiir:HzS4a-3tJ2ZrJeaEsb7fxL_Ns1NLupKT@ruby.db.elephantsql.com:5432/yqeexiir"
+JWT_SECRET="McQfTjWnZr4u7xADGJaNdRgUkXp2s5v8yB?EHMbPeShVmYq3t6w9zCF"
+EMAIL_DATABASE="mongodb+srv://admin:NR1bti5H3xM0gMru@cluster0.35z4u.mongodb.net/email"`
+
+Docker is required to run locally.
 
 # How to use
 
